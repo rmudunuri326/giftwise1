@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giftwise — Build Your Gift Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#FFFBF3; --ink:#241F1C; --ink-soft:#6B6358; --coral:#FF6B52; --coral-deep:#E8502E; --teal:#1F8A7A; --gold:#FFC24B; --lav:#8C7FE0; --line:#EDE6D6; --card:#fff; }
+  * { box-sizing:border-box; }
+  html,body { overflow-x:hidden; width:100%; margin:0; }
+  body { background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }
+  h1,h2,h3,h4 { font-family:'Fraunces',serif; font-weight:600; margin:0; }
+  a,button { font-family:inherit; }
+  .wrap { max-width:780px; margin:0 auto; padding:0 20px 60px; }
+
+  header { position:sticky; top:0; z-index:10; background:var(--paper); border-bottom:1px solid var(--line); }
+  .topbar { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; max-width:780px; margin:0 auto; flex-wrap:wrap; gap:10px; }
+  .logo { font-size:1.2rem; font-weight:700; }
+  .io-btns { display:flex; gap:8px; }
+  .io-btn { font-size:0.78rem; padding:7px 12px; border-radius:100px; border:1px solid var(--line); background:var(--card); cursor:pointer; color:var(--ink-soft); }
+  .tabs { display:flex; gap:4px; max-width:780px; margin:0 auto; padding:0 20px; overflow-x:auto; }
+  .tab { padding:10px 13px; font-size:0.87rem; font-weight:500; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
+  .tab.on { color:var(--ink); font-weight:600; border-bottom-color:var(--coral); }
+
+  .view { display:none; padding-top:24px; }
+  .view.on { display:block; }
+
+  .section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:16px; }
+  .section h3 { font-size:1rem; margin-bottom:4px; }
+  .section .desc { font-size:0.84rem; color:var(--ink-soft); margin-bottom:14px; }
+
+  input[type=text], textarea { width:100%; padding:11px 13px; border:1.5px solid var(--line); border-radius:10px; font-family:inherit; font-size:0.9rem; background:var(--paper); color:var(--ink); }
+  label.field-label { font-size:0.82rem; color:var(--ink-soft); display:block; margin-bottom:6px; }
+  .field { margin-bottom:14px; }
+
+  .chip-row { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { padding:8px 14px; border-radius:100px; border:1.5px solid var(--line); font-size:0.86rem; cursor:pointer; background:var(--paper); color:var(--ink-soft); }
+  .chip.on { border-color:var(--coral); background:#FFF1EE; color:var(--coral-deep); font-weight:600; }
+
+  .item-row { display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:10px 13px; margin-bottom:7px; font-size:0.88rem; }
+  .item-row .x { color:var(--ink-soft); cursor:pointer; font-weight:700; }
+  .add-row { display:flex; gap:8px; margin-top:8px; }
+  .add-row input { flex:1; }
+  .add-btn { padding:11px 16px; border-radius:10px; background:var(--ink); color:#fff; font-weight:600; font-size:0.84rem; border:none; cursor:pointer; white-space:nowrap; }
+
+  .goal-row { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:8px; }
+  .goal-row .top { display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:6px; }
+  .gbar { height:6px; background:var(--line); border-radius:3px; overflow:hidden; }
+  .gbar-fill { height:100%; background:var(--teal); }
+  .goal-add { display:grid; grid-template-columns:2fr 1fr auto; gap:8px; margin-top:8px; }
+
+  .slevels { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .slevel { border:1.5px solid var(--line); border-radius:12px; padding:13px; cursor:pointer; background:var(--paper); }
+  .slevel.on { border-color:var(--coral); background:#FFF1EE; }
+  .slevel-title { font-weight:600; font-size:0.86rem; margin-bottom:5px; }
+  .slevel.on .slevel-title { color:var(--coral-deep); }
+  .slevel-desc { font-size:0.76rem; color:var(--ink-soft); line-height:1.4; }
+
+  .btn-primary { padding:13px 24px; border-radius:100px; background:var(--coral); color:#fff; font-weight:600; border:none; cursor:pointer; font-size:0.92rem; }
+
+  /* Dashboard tinted sections */
+  .dash-section { border-radius:16px; padding:20px; margin-bottom:18px; border:1px solid var(--line); }
+  .dash-profile { background:#FFFBEF; border-top:4px solid var(--gold); }
+  .dash-occasion { background:#F7F5FC; border-top:4px solid var(--lav); }
+  .dash-label { font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .dash-dot { width:9px; height:9px; border-radius:50%; }
+  .db-bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin:8px 0; }
+  .db-bar-fill { height:100%; background:var(--coral); }
+  .db-row { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--ink-soft); }
+  .cat-tabs { display:flex; gap:4px; border-bottom:1px solid var(--line); margin:16px 0 12px; }
+  .cat-tab { padding:7px 4px; margin-right:16px; font-size:0.86rem; font-weight:500; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; }
+  .cat-tab.on { color:var(--ink); font-weight:600; border-bottom-color:var(--lav); }
+  .pc-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:0.88rem; }
+  .pc-row:first-child { border-top:none; }
+  .pc-sum { color:var(--ink-soft); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.84rem; }
+  .occ-preview-btn { display:inline-block; margin-top:10px; font-size:0.86rem; font-weight:600; color:var(--coral-deep); cursor:pointer; }
+
+  /* Occasion Page preview */
+  .occ-cover { height:140px; border-radius:14px; background:linear-gradient(135deg,var(--coral),var(--gold)); margin-bottom:16px; }
+  .occ-msg { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; font-family:'Fraunces',serif; font-style:italic; font-size:1.02rem; line-height:1.6; }
+  .occ-opts { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .occ-opt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .occ-opt h4 { font-size:0.96rem; margin-bottom:4px; }
+  .occ-opt p { margin:0; font-size:0.82rem; color:var(--ink-soft); }
+  .avoid-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+  .avoid-tag { background:var(--card); border:1px solid var(--line); border-radius:100px; padding:5px 12px; font-size:0.8rem; color:var(--ink-soft); }
+
+  /* Settings */
+  .set-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-top:1px solid var(--line); }
+  .set-row:first-child { border-top:none; }
+  .set-label { font-size:0.92rem; }
+  .set-badge { font-size:0.76rem; font-weight:600; padding:4px 10px; border-radius:100px; }
+  .set-badge.pub { background:#E3F4EE; color:var(--teal); }
+  .set-badge.priv { background:var(--line); color:var(--ink-soft); }
+
+  /* Impact & Community (sample/static) */
+  .sample-tag { display:inline-block; background:var(--line); color:var(--ink-soft); font-size:0.74rem; font-weight:600; padding:4px 10px; border-radius:100px; margin-bottom:16px; }
+  .impact-cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+  .impact-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .impact-card .ic { width:30px; height:30px; border-radius:9px; margin-bottom:10px; }
+  .impact-card h3 { font-size:1.3rem; }
+  .impact-card p { margin:4px 0 0; font-size:0.84rem; color:var(--ink-soft); }
+  .story { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:10px; display:flex; gap:12px; }
+  .story .av { width:32px; height:32px; border-radius:50%; flex-shrink:0; }
+  .story p { margin:0; font-size:0.88rem; }
+  .story .who { color:var(--ink-soft); font-size:0.78rem; margin-top:4px; }
+  .feed-item { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:10px; display:flex; gap:12px; }
+
+  .home-hero { padding:30px 0 36px; }
+  .home-eyebrow { display:inline-block; background:var(--card); border:1px solid var(--line); padding:6px 14px; border-radius:100px; color:var(--coral-deep); font-size:0.85rem; font-weight:500; margin-bottom:18px; }
+  .home-h1 { font-size:clamp(1.8rem,5vw,2.6rem); max-width:15ch; line-height:1.1; }
+  .home-lead { max-width:46ch; color:var(--ink-soft); font-size:1.05rem; margin-top:16px; }
+  .home-ctas { margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-secondary { padding:13px 24px; border-radius:100px; border:1.5px solid var(--ink); background:transparent; font-weight:600; cursor:pointer; font-size:0.92rem; }
+  .home-strip { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; }
+  .home-strip h2 { font-size:1.05rem; font-weight:500; color:var(--ink-soft); margin-bottom:18px; }
+  .home-strip h2 strong { color:var(--ink); font-weight:600; }
+  .home-strip-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .home-num { font-family:'Fraunces',serif; font-size:1.5rem; font-weight:700; color:var(--coral-deep); }
+  .home-label { font-size:0.78rem; color:var(--ink-soft); margin-top:4px; }
+  .home-kicker { color:var(--coral-deep); font-size:0.85rem; font-weight:600; margin-bottom:8px; }
+  .home-pillars { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .home-pillars h4 { font-size:0.96rem; margin-bottom:6px; }
+  .home-pillars p { margin:0; font-size:0.84rem; color:var(--ink-soft); }
+  .home-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .home-step-n { font-family:'Fraunces',serif; color:var(--coral-deep); font-weight:700; font-size:0.95rem; margin-bottom:6px; }
+  .home-steps h4 { font-size:0.9rem; margin-bottom:4px; }
+  .home-steps p { margin:0; font-size:0.8rem; color:var(--ink-soft); }
+  .home-cta { background:var(--coral); border-radius:16px; padding:30px 26px; margin-bottom:16px; }
+  @media (max-width:600px){ .home-strip-row{grid-template-columns:1fr 1fr;} .home-pillars{grid-template-columns:1fr;} .home-steps{grid-template-columns:1fr 1fr;} }
+  .empty-note { text-align:center; color:var(--ink-soft); font-size:0.9rem; padding:30px 0; }
+  @media (max-width:600px){ .occ-opts{grid-template-columns:1fr;} .slevels{grid-template-columns:1fr;} .goal-add{grid-template-columns:1fr;} .impact-cards{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="logo">🎁 Giftwise</div>
+    <div class="io-btns">
+      <button class="io-btn" onclick="exportProfile()">⬇ Save to file</button>
+      <button class="io-btn" onclick="document.getElementById('importFile').click()">⬆ Load from file</button>
+      <button class="io-btn" onclick="resetSample()">↺ Reset to sample</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProfile(event)">
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab on" data-view="home" onclick="switchView(this)">Homepage</div>
+    <div class="tab" data-view="profile" onclick="switchView(this)">My Profile</div>
+    <div class="tab" data-view="dashboard" onclick="switchView(this)">Dashboard</div>
+    <div class="tab" data-view="occasion" onclick="switchView(this)">Occasion Page</div>
+    <div class="tab" data-view="giving" onclick="switchView(this)">Giving</div>
+    <div class="tab" data-view="settings" onclick="switchView(this)">Settings</div>
+    <div class="tab" data-view="impact" onclick="switchView(this)">Impact</div>
+    <div class="tab" data-view="community" onclick="switchView(this)">Community</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HOMEPAGE VIEW -->
+  <div class="view on" id="view-home">
+    <div class="home-hero">
+      <div class="home-eyebrow">Give more meaning. Waste less.</div>
+      <h1 class="home-h1">Let people give you what truly matters.</h1>
+      <p class="home-lead">Share what would genuinely make you happy, so family and friends can give with confidence — and every gift feels personal, thoughtful, and meaningful.</p>
+      <div class="home-ctas">
+        <button class="btn-primary" onclick="goTo('profile')">Create my Gift Profile</button>
+        <button class="btn-secondary" onclick="goTo('dashboard')">See a sample profile</button>
+      </div>
+    </div>
+
+    <div class="home-strip">
+      <h2>Most gifts don't miss by much — <strong>they just miss what the person actually needed.</strong></h2>
+      <div class="home-strip-row">
+        <div><div class="home-num">4 in 10</div><div class="home-label">gifts go unused within a year</div></div>
+        <div><div class="home-num">62%</div><div class="home-label">of people have re-gifted something they received</div></div>
+        <div><div class="home-num">$16B</div><div class="home-label">spent yearly on gifts that go unwanted</div></div>
+        <div><div class="home-num">0</div><div class="home-label">of this is anyone's fault — it's a guessing problem</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="home-kicker">Why Giftwise exists</div>
+      <h2 style="font-size:1.4rem;margin-bottom:16px;">The point isn't to give less. It's to give better.</h2>
+      <div class="home-pillars">
+        <div><h4>❤️ More Meaning</h4><p>Give something they'll genuinely appreciate.</p></div>
+        <div><h4>🎯 More Purpose</h4><p>Help someone make progress on a goal.</p></div>
+        <div><h4>🌎 Less Waste</h4><p>Don't buy something that ends up unused.</p></div>
+        <div><h4>😊 Better Giving</h4><p>Make choosing a gift easier for everyone.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 style="font-size:1.4rem;margin-bottom:16px;">From profile to gift, in four steps</h2>
+      <div class="home-steps">
+        <div><div class="home-step-n">01</div><h4>Create your profile</h4><p>Share what you love and what you're working toward.</p></div>
+        <div><div class="home-step-n">02</div><h4>Add an occasion, if you have one</h4><p>Or skip this — your profile works year-round.</p></div>
+        <div><div class="home-step-n">03</div><h4>Share it</h4><p>Send a link, or keep your profile open for anyone.</p></div>
+        <div><div class="home-step-n">04</div><h4>They give their way</h4><p>Help a goal, give an experience, or surprise you.</p></div>
+      </div>
+    </div>
+
+    <div class="home-cta">
+      <h2 style="color:#fff;font-size:1.5rem;">Start with the person, not the product.</h2>
+      <p style="color:#FFE4DC;margin-top:10px;">Your profile is free, and you're in control of what's shared.</p>
+      <button class="btn-primary" style="margin-top:16px;background:#fff;color:var(--coral-deep);" onclick="goTo('profile')">Create my Gift Profile</button>
+    </div>
+  </div>
+
+  <!-- PROFILE VIEW -->
+  <div class="view" id="view-profile">
+    <div class="section">
+      <h3>About you</h3>
+      <div class="field"><label class="field-label">Your name</label><input type="text" id="f-name" oninput="save()"></div>
+      <div class="field"><label class="field-label">About me</label><textarea id="f-about" rows="2" oninput="save()"></textarea></div>
+      <div class="field"><label class="field-label">Interests</label><div class="chip-row" id="interests-list"></div>
+        <div class="add-row"><input type="text" id="interest-input" placeholder="Add an interest..."><button class="add-btn" onclick="addItem('interests','interest-input')">+ Add</button></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>What makes you happy</h3>
+      <div class="desc">Turn categories on to show them on your Occasion Page.</div>
+      <div class="chip-row">
+        <div class="chip" data-cat="goals" onclick="toggleCat(this)">🎯 My Goals</div>
+        <div class="chip" data-cat="choice" onclick="toggleCat(this)">💰 Give Me Choice</div>
+        <div class="chip" data-cat="experiences" onclick="toggleCat(this)">🌎 Experiences</div>
+        <div class="chip" data-cat="causes" onclick="toggleCat(this)">❤️ Causes</div>
+        <div class="chip" data-cat="timehelp" onclick="toggleCat(this)">🕰️ Time / Help</div>
+        <div class="chip" data-cat="surprise" onclick="toggleCat(this)">🎲 Surprise Me</div>
+        <div class="chip" data-cat="keepsake" onclick="toggleCat(this)">💝 Keepsake</div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-goals" style="display:none;">
+      <h3>🎯 My Goals</h3>
+      <div id="goals-list"></div>
+      <div class="goal-add">
+        <input type="text" id="goal-name" placeholder="Goal name">
+        <input type="text" id="goal-target" placeholder="Target $">
+        <button class="add-btn" onclick="addGoal()">+ Add</button>
+      </div>
+    </div>
+
+    <div class="section" id="sec-choice" style="display:none;">
+      <h3>💰 Give Me Choice</h3>
+      <div id="choice-list"></div>
+      <div class="add-row"><input type="text" id="choice-input" placeholder="e.g. Amazon gift card"><button class="add-btn" onclick="addItem('choice','choice-input')">+ Add</button></div>
+    </div>
+
+    <div class="section" id="sec-experiences" style="display:none;">
+      <h3>🌎 Experiences</h3>
+      <div id="experiences-list"></div>
+      <div class="add-row"><input type="text" id="experiences-input" placeholder="e.g. Dinner at a new restaurant"><button class="add-btn" onclick="addItem('experiences','experiences-input')">+ Add</button></div>
+    </div>
+
+    <div class="section" id="sec-causes" style="display:none;">
+      <h3>❤️ Causes</h3>
+      <div id="causes-list"></div>
+      <div class="add-row"><input type="text" id="causes-input" placeholder="e.g. Ocean Conservancy"><button class="add-btn" onclick="addItem('causes','causes-input')">+ Add</button></div>
+    </div>
+
+    <div class="section" id="sec-timehelp" style="display:none;">
+      <h3>🕰️ Time / Help</h3>
+      <div id="timehelp-list"></div>
+      <div class="add-row"><input type="text" id="timehelp-input" placeholder="e.g. Help me move"><button class="add-btn" onclick="addItem('timehelp','timehelp-input')">+ Add</button></div>
+    </div>
+
+    <div class="section" id="sec-keepsake" style="display:none;">
+      <h3>💝 Keepsake</h3>
+      <div id="keepsake-list"></div>
+      <div class="add-row"><input type="text" id="keepsake-input" placeholder="e.g. A framed photo"><button class="add-btn" onclick="addItem('keepsake','keepsake-input')">+ Add</button></div>
+    </div>
+
+    <div class="section" id="sec-surprise" style="display:none;">
+      <h3>🎲 Surprise Me level</h3>
+      <div class="slevels">
+        <div class="slevel" data-level="guided" onclick="setLevel(this)"><div class="slevel-title">Guided</div><div class="slevel-desc">Choose from the things I've mentioned.</div></div>
+        <div class="slevel" data-level="decide" onclick="setLevel(this)"><div class="slevel-title">You Decide</div><div class="slevel-desc">Pick something that fits my interests, even if it's not on my list.</div></div>
+        <div class="slevel" data-level="trust" onclick="setLevel(this)"><div class="slevel-title">Full Trust</div><div class="slevel-desc">I trust you completely — you still won't see anything from my avoid list.</div></div>
+      </div>
+      <div class="field" style="margin-top:14px;"><label class="field-label">Surprise me with</label><div class="chip-row" id="hints-list"></div>
+        <div class="add-row"><input type="text" id="hint-input" placeholder="e.g. Food"><button class="add-btn" onclick="addItem('surpriseHints','hint-input')">+ Add</button></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Please don't buy me</h3>
+      <div id="avoid-list"></div>
+      <div class="add-row"><input type="text" id="avoid-input" placeholder="e.g. Clothing"><button class="add-btn" onclick="addItem('avoid','avoid-input')">+ Add</button></div>
+    </div>
+
+    <div class="section">
+      <h3>Occasion Page message</h3>
+      <div class="desc">What should people know for this specific occasion?</div>
+      <div class="field"><label class="field-label">Occasion type</label><input type="text" id="f-occtype" oninput="save()"></div>
+      <textarea id="f-occmsg" rows="3" oninput="save()"></textarea>
+    </div>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div class="view" id="view-dashboard">
+    <div class="dash-section dash-profile">
+      <div class="dash-label"><span class="dash-dot" style="background:var(--gold)"></span>My Gift Profile <span style="font-weight:400;font-size:0.82rem;color:var(--ink-soft);">— always on, year-round</span></div>
+      <h3 id="db-greeting" style="font-size:1.1rem;">Welcome!</h3>
+      <div class="db-bar"><div class="db-bar-fill" id="db-completeness-bar" style="width:0%"></div></div>
+      <div class="db-row"><span id="db-completeness-text">0% complete</span><span>Fill in My Profile to grow this</span></div>
+      <div class="cat-tabs">
+        <div class="cat-tab on" data-pstate="active" onclick="switchCatTab(this)">Active</div>
+        <div class="cat-tab" data-pstate="closed" onclick="switchCatTab(this)">Closed</div>
+      </div>
+      <div id="db-active-list"></div>
+    </div>
+    <div class="dash-section dash-occasion">
+      <div class="dash-label"><span class="dash-dot" style="background:var(--lav)"></span>Occasion Page <span style="font-weight:400;font-size:0.82rem;color:var(--ink-soft);">— temporary, tied to an event</span></div>
+      <h3 id="db-occ-title" style="font-size:1.05rem;">No occasion set up yet</h3>
+      <p id="db-occ-sub" style="color:var(--ink-soft);font-size:0.86rem;margin-top:4px;"></p>
+      <div class="occ-preview-btn" onclick="switchView(document.querySelector('[data-view=occasion]'))">View Occasion Page →</div>
+    </div>
+  </div>
+
+  <!-- OCCASION PAGE VIEW -->
+  <div class="view" id="view-occasion">
+    <div class="occ-cover"></div>
+    <h1 id="occ-title">Your Occasion Page</h1>
+    <p id="occ-sub" style="color:var(--ink-soft); margin-top:4px;"></p>
+    <div class="occ-msg" id="occ-message-box"></div>
+    <div class="occ-opts" id="occ-opts-list"></div>
+    <div class="avoid-tags" id="occ-avoid-list"></div>
+  </div>
+
+  <!-- GIVING VIEW -->
+  <div class="view" id="view-giving">
+    <h1>Ways to give</h1>
+    <p style="color:var(--ink-soft); margin-top:4px; margin-bottom:20px;">What a giver sees for this profile.</p>
+    <div id="giving-sections"></div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div class="view" id="view-settings">
+    <h1 style="margin-bottom:6px;">Privacy &amp; visibility</h1>
+    <p style="color:var(--ink-soft);margin-bottom:20px;">Choose who sees each category.</p>
+    <div class="section" id="settings-rows"></div>
+  </div>
+
+  <!-- IMPACT VIEW (sample/static preview) -->
+  <div class="view" id="view-impact">
+    <div class="sample-tag">Sample preview — not tied to your edits</div>
+    <h1 style="margin-bottom:6px;">What giving better has meant for you</h1>
+    <p style="color:var(--ink-soft);margin-bottom:20px;">A simple look at how gifts and contributions have landed.</p>
+    <div class="impact-cards">
+      <div class="impact-card"><div class="ic" style="background:var(--coral)"></div><h3>3 goals</h3><p>Helped someone reach something they were working toward.</p></div>
+      <div class="impact-card"><div class="ic" style="background:var(--teal)"></div><h3>2 experiences</h3><p>Shared time or an experience instead of another object.</p></div>
+      <div class="impact-card"><div class="ic" style="background:var(--gold)"></div><h3>1 cause</h3><p>A contribution made in someone's honor.</p></div>
+      <div class="impact-card"><div class="ic" style="background:var(--lav)"></div><h3>5 thank-yous</h3><p>Gifts your recipients said they genuinely appreciated.</p></div>
+    </div>
+    <h3 style="font-size:1.05rem;margin-bottom:12px;">What people told you</h3>
+    <div class="story"><div class="av" style="background:var(--coral)"></div><div><p>"This is exactly what I needed — thank you for asking first instead of guessing."</p><div class="who">— David K., after you helped fund his graduation goal</div></div></div>
+    <div class="story"><div class="av" style="background:var(--teal)"></div><div><p>"We had such a good time at that dinner. Best gift this year."</p><div class="who">— Priya, after her experience gift</div></div></div>
+  </div>
+
+  <!-- COMMUNITY VIEW (sample/static preview) -->
+  <div class="view" id="view-community">
+    <div class="sample-tag">Sample preview — not tied to your edits</div>
+    <h1 style="margin-bottom:6px;">Activity from your connections</h1>
+    <p style="color:var(--ink-soft);margin-bottom:20px;">Only visible to people you've shared a page with — not a public feed.</p>
+    <div class="feed-item"><div class="av" style="background:var(--coral);width:32px;height:32px;border-radius:50%;flex-shrink:0;"></div><div><p style="margin:0;font-size:0.9rem;"><strong>Mia T.</strong> helped fund your Japan trip goal</p><div style="color:var(--ink-soft);font-size:0.78rem;margin-top:4px;">2 days ago</div></div></div>
+    <div class="feed-item"><div class="av" style="background:var(--teal);width:32px;height:32px;border-radius:50%;flex-shrink:0;"></div><div><p style="margin:0;font-size:0.9rem;"><strong>Priya S.</strong> sent a thank-you for a dinner experience</p><div style="color:var(--ink-soft);font-size:0.78rem;margin-top:4px;">1 week ago</div></div></div>
+  </div>
+
+</div>
+
+<script>
+const sampleState = {
+  name: 'Raj', about: "Always planning my next trip, happiest behind a camera, and trying to cook my way through every region of Japan before I actually get there.",
+  occtype: 'Birthday', occmsg: "I don't need more stuff this year. What would make me happiest is helping me get closer to my Japan trip, or just spending time together.",
+  interests: ['Travel','Photography','Cooking'],
+  goals: [{name:'Japan trip', target:3000, raised:1200}, {name:'New camera lens', target:450, raised:0}],
+  choice: ['Amazon gift card','Visa gift card','General contribution, any amount'],
+  experiences: ['Dinner at a new restaurant','Photography class','Weekend trip somewhere new'],
+  causes: ['Ocean Conservancy','Room to Read'],
+  timehelp: ['Help me move','Teach me your recipe for paella'],
+  keepsake: ['A framed photo from a trip together','Something handmade'],
+  avoid: ['Clothing','Home décor','Kitchen gadgets'],
+  surpriseLevel: 'decide',
+  surpriseHints: ['Food','Travel-related'],
+  categoriesOn: { goals:true, choice:true, experiences:true, causes:true, timehelp:false, surprise:true, keepsake:false }
+};
+let state = JSON.parse(JSON.stringify(sampleState));
+const catLabels = {goals:'🎯 My Goals', choice:'💰 Give Me Choice', experiences:'🌎 Experiences', causes:'❤️ Causes', timehelp:'🕰️ Time / Help', surprise:'🎲 Surprise Me', keepsake:'💝 Keepsake'};
+const listKeysMap = {goals:'goals', choice:'choice', experiences:'experiences', causes:'causes', timehelp:'timehelp', keepsake:'keepsake'};
+
+function load() {
+  try {
+    const saved = localStorage.getItem('giftwise_profile');
+    if (saved) state = JSON.parse(saved);
+  } catch(e) {}
+  if (!state.surpriseHints) state.surpriseHints = [];
+  hydrateForm();
+  renderAll();
+}
+
+function resetSample() {
+  if (!confirm('Reset back to the sample profile? Your edits will be lost unless saved to a file first.')) return;
+  state = JSON.parse(JSON.stringify(sampleState));
+  try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(e) {}
+  hydrateForm(); renderAll();
+}
+
+function save() {
+  state.name = document.getElementById('f-name').value;
+  state.about = document.getElementById('f-about').value;
+  state.occtype = document.getElementById('f-occtype').value;
+  state.occmsg = document.getElementById('f-occmsg').value;
+  try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(e) {}
+  renderAll();
+}
+
+function hydrateForm() {
+  document.getElementById('f-name').value = state.name || '';
+  document.getElementById('f-about').value = state.about || '';
+  document.getElementById('f-occtype').value = state.occtype || '';
+  document.getElementById('f-occmsg').value = state.occmsg || '';
+  document.querySelectorAll('.chip[data-cat]').forEach(c => {
+    const cat = c.getAttribute('data-cat');
+    c.classList.toggle('on', !!state.categoriesOn[cat]);
+    const sec = document.getElementById('sec-' + cat);
+    if (sec) sec.style.display = state.categoriesOn[cat] ? '' : 'none';
+  });
+  document.querySelectorAll('.slevel').forEach(l => l.classList.toggle('on', l.getAttribute('data-level') === state.surpriseLevel));
+}
+
+function toggleCat(chip) {
+  const cat = chip.getAttribute('data-cat');
+  state.categoriesOn[cat] = !state.categoriesOn[cat];
+  chip.classList.toggle('on', state.categoriesOn[cat]);
+  const sec = document.getElementById('sec-' + cat);
+  if (sec) sec.style.display = state.categoriesOn[cat] ? '' : 'none';
+  save();
+}
+
+function setLevel(el) {
+  state.surpriseLevel = el.getAttribute('data-level');
+  document.querySelectorAll('.slevel').forEach(l => l.classList.toggle('on', l === el));
+  save();
+}
+
+function addItem(key, inputId) {
+  const input = document.getElementById(inputId);
+  const val = input.value.trim();
+  if (!val) return;
+  if (!state[key]) state[key] = [];
+  state[key].push(val);
+  input.value = '';
+  save();
+  renderLists();
+}
+function removeItem(key, idx) { state[key].splice(idx,1); save(); renderLists(); }
+
+function addGoal() {
+  const name = document.getElementById('goal-name').value.trim();
+  const target = document.getElementById('goal-target').value.trim();
+  if (!name || !target) return;
+  state.goals.push({name, target: parseFloat(target)||0, raised:0});
+  document.getElementById('goal-name').value=''; document.getElementById('goal-target').value='';
+  save(); renderLists();
+}
+function removeGoal(idx) { state.goals.splice(idx,1); save(); renderLists(); }
+
+function renderLists() {
+  const simpleLists = ['interests','choice','experiences','causes','timehelp','keepsake','avoid','surpriseHints'];
+  simpleLists.forEach(key => {
+    const el = document.getElementById((key==='surpriseHints'?'hints':key) + '-list');
+    if (!el) return;
+    if (key === 'interests' || key === 'surpriseHints') {
+      el.innerHTML = (state[key]||[]).map((v,i) => `<div class="chip on" onclick="removeItem('${key}',${i})">${v} ✕</div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">None yet</span>';
+    } else {
+      el.innerHTML = (state[key]||[]).map((v,i) => `<div class="item-row">${v}<span class="x" onclick="removeItem('${key}',${i})">×</span></div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">None yet</span>';
+    }
+  });
+  const gl = document.getElementById('goals-list');
+  gl.innerHTML = state.goals.map((g,i) => `
+    <div class="goal-row">
+      <div class="top"><span><strong>${g.name}</strong></span><span class="x" onclick="removeGoal(${i})" style="color:var(--ink-soft);cursor:pointer;">×</span></div>
+      <div style="font-size:0.82rem;color:var(--ink-soft);margin-bottom:6px;">$${g.raised} of $${g.target}</div>
+      <div class="gbar"><div class="gbar-fill" style="width:${g.target>0?Math.min(100,g.raised/g.target*100):0}%"></div></div>
+    </div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">No goals yet</span>';
+}
+
+function computeCompleteness() {
+  let filled = 0, total = 5;
+  if (state.name) filled++;
+  if (state.about) filled++;
+  if (state.interests.length) filled++;
+  if (Object.values(state.categoriesOn).some(v=>v)) filled++;
+  if (state.avoid.length) filled++;
+  return Math.round(filled/total*100);
+}
+
+let dashCatState = 'active';
+function switchCatTab(tab) {
+  dashCatState = tab.getAttribute('data-pstate');
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('on', t === tab));
+  renderDashboard();
+}
+
+function renderDashboard() {
+  document.getElementById('db-greeting').textContent = state.name ? `Welcome back, ${state.name}` : 'Welcome!';
+  const pct = computeCompleteness();
+  document.getElementById('db-completeness-bar').style.width = pct + '%';
+  document.getElementById('db-completeness-text').textContent = pct + '% complete';
+  let rows = '';
+  Object.keys(catLabels).forEach(cat => {
+    const isOn = !!state.categoriesOn[cat];
+    if (dashCatState === 'active' && !isOn) return;
+    if (dashCatState === 'closed' && isOn) return;
+    let summary = '';
+    if (cat === 'goals') summary = state.goals.map(g=>g.name).join(', ') || 'No items yet';
+    else if (cat === 'surprise') summary = 'Level: ' + ({guided:'Guided',decide:'You Decide',trust:'Full Trust'}[state.surpriseLevel]);
+    else summary = (state[listKeysMap[cat]]||[]).join(', ') || 'No items yet';
+    rows += `<div class="pc-row"><span>${catLabels[cat]}</span><span class="pc-sum">${isOn ? summary : 'Not shown on profile'}</span></div>`;
+  });
+  document.getElementById('db-active-list').innerHTML = rows || `<div class="empty-note">No ${dashCatState} categories.</div>`;
+  document.getElementById('db-occ-title').textContent = state.name ? `${state.name}'s ${state.occtype || 'Occasion'}` : 'No occasion set up yet';
+  document.getElementById('db-occ-sub').textContent = state.occmsg ? state.occmsg.slice(0,80) + (state.occmsg.length>80?'...':'') : 'Add a message in My Profile';
+}
+
+function renderOccasion() {
+  document.getElementById('occ-title').textContent = state.name ? `${state.name}'s ${state.occtype || 'Occasion'}` : 'Your Occasion Page';
+  document.getElementById('occ-sub').textContent = state.occtype ? `${state.occtype} · Occasion Page` : 'Fill in My Profile to build this page';
+  document.getElementById('occ-message-box').textContent = state.occmsg || 'Add a personal message in My Profile to show it here.';
+  const catInfo = {
+    goals: {icon:'🎯', title:'Help Me Reach a Goal', desc: () => state.goals.length ? `Contribute toward ${state.goals[0].name}` : 'Add a goal in My Profile'},
+    choice: {icon:'💰', title:'Give Me Choice', desc: () => state.choice.join(', ') || 'Add choice options'},
+    experiences: {icon:'🌎', title:'Give Me an Experience', desc: () => state.experiences.join(', ') || 'Add experiences'},
+    causes: {icon:'❤️', title:'Support a Cause', desc: () => state.causes.join(', ') || 'Add causes'},
+    timehelp: {icon:'🕰️', title:'Give Time / Help', desc: () => state.timehelp.join(', ') || 'Add time/help ideas'},
+    surprise: {icon:'🎲', title:'Surprise Me', desc: () => 'I trust you to choose'},
+    keepsake: {icon:'💝', title:'Give a Keepsake', desc: () => state.keepsake.join(', ') || 'Add keepsake ideas'}
+  };
+  let opts = '';
+  Object.keys(catInfo).forEach(cat => {
+    if (!state.categoriesOn[cat]) return;
+    const c = catInfo[cat];
+    opts += `<div class="occ-opt"><h4>${c.icon} ${c.title}</h4><p>${c.desc()}</p></div>`;
+  });
+  document.getElementById('occ-opts-list').innerHTML = opts || '<div class="empty-note">Turn on categories in My Profile to see them here.</div>';
+  document.getElementById('occ-avoid-list').innerHTML = state.avoid.map(a => `<span class="avoid-tag">${a}</span>`).join('');
+}
+
+function renderGiving() {
+  const levelLabel = {guided:'Guided',decide:'You Decide',trust:'Full Trust'};
+  const levelDesc = {guided:"Choose from the things I've mentioned.", decide:"Pick something that fits my interests, even if it's not on my list.", trust:"I trust you completely — you still won't see anything from my avoid list."};
+  let html = '';
+  if (state.categoriesOn.goals) {
+    html += `<div class="section"><h3>🎯 Help a goal</h3>` + (state.goals.map(g => `
+      <div class="goal-row"><div class="top"><strong>${g.name}</strong><span>$${g.raised} of $${g.target}</span></div>
+      <div class="gbar"><div class="gbar-fill" style="width:${g.target>0?Math.min(100,g.raised/g.target*100):0}%"></div></div></div>`).join('') || '<div class="empty-note">No goals added</div>') + `</div>`;
+  }
+  if (state.categoriesOn.experiences) html += `<div class="section"><h3>🌎 Give an experience</h3>` + (state.experiences.map(e=>`<div class="item-row">${e}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
+  if (state.categoriesOn.causes) html += `<div class="section"><h3>❤️ Support a cause</h3>` + (state.causes.map(c=>`<div class="item-row">${c}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
+  if (state.categoriesOn.choice) html += `<div class="section"><h3>💰 Give me choice</h3>` + (state.choice.map(c=>`<div class="item-row">${c}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
+  if (state.categoriesOn.timehelp) html += `<div class="section"><h3>🕰️ Time / Help</h3>` + (state.timehelp.map(t=>`<div class="item-row">${t}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
+  if (state.categoriesOn.keepsake) html += `<div class="section"><h3>💝 Keepsake</h3>` + (state.keepsake.map(k=>`<div class="item-row">${k}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
+  if (state.categoriesOn.surprise) html += `<div class="section"><h3>🎲 Surprise me</h3><div style="font-size:0.84rem;color:var(--coral-deep);font-weight:600;margin-bottom:8px;">Level: ${levelLabel[state.surpriseLevel]}</div><p style="font-size:0.88rem;color:var(--ink-soft);margin-bottom:10px;">${levelDesc[state.surpriseLevel]}</p><div class="chip-row">${(state.surpriseHints||[]).map(h=>`<span class="chip on">${h}</span>`).join('')}</div></div>`;
+  document.getElementById('giving-sections').innerHTML = html || '<div class="empty-note">Turn on categories in My Profile to see them here.</div>';
+}
+
+function renderSettings() {
+  let html = '';
+  Object.keys(catLabels).forEach(cat => {
+    const isOn = !!state.categoriesOn[cat];
+    html += `<div class="set-row"><span class="set-label">${catLabels[cat]}</span><span class="set-badge ${isOn?'pub':'priv'}">${isOn?'Public':'Private'}</span></div>`;
+  });
+  document.getElementById('settings-rows').innerHTML = html + `<div style="font-size:0.8rem;color:var(--ink-soft);margin-top:14px;">Toggle categories on My Profile to change visibility here.</div>`;
+}
+
+function renderAll() { renderLists(); renderDashboard(); renderOccasion(); renderGiving(); renderSettings(); }
+
+function goTo(viewName) {
+  const tab = document.querySelector('.tab[data-view="' + viewName + '"]');
+  if (tab) switchView(tab);
+}
+
+function switchView(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === tab));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'view-' + tab.getAttribute('data-view')));
+  renderAll();
+}
+
+function exportProfile() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = (state.name || 'my') + '-giftwise-profile.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importProfile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      state = JSON.parse(e.target.result);
+      if (!state.surpriseHints) state.surpriseHints = [];
+      try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(err) {}
+      hydrateForm(); renderAll();
+    } catch(err) { alert('Could not read that file.'); }
+  };
+  reader.readAsText(file);
+}
+
+load();
+</script>
+</body>
+</html>
