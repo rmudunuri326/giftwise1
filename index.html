@@ -3,620 +3,712 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Giftwise — Build Your Gift Profile</title>
+<title>Giftwise — Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --paper:#FFFBF3; --ink:#241F1C; --ink-soft:#6B6358; --coral:#FF6B52; --coral-deep:#E8502E; --teal:#1F8A7A; --gold:#FFC24B; --lav:#8C7FE0; --line:#EDE6D6; --card:#fff; }
+  :root { --paper:#FFFBF3; --ink:#241F1C; --ink-soft:#6B6358; --coral:#FF6B52; --coral-deep:#E8502E; --teal:#1F8A7A; --gold:#FFC24B; --lav:#8C7FE0; --line:#EDE6D6; --card:#ffffff; }
   * { box-sizing:border-box; }
-  html,body { overflow-x:hidden; width:100%; margin:0; }
-  body { background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }
-  h1,h2,h3,h4 { font-family:'Fraunces',serif; font-weight:600; margin:0; }
-  a,button { font-family:inherit; }
-  .wrap { max-width:780px; margin:0 auto; padding:0 20px 60px; }
+  html, body { overflow-x:hidden; width:100%; margin:0; }
+  body { background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; line-height:1.5; }
+  .gw-bar { position:sticky; top:0; z-index:100; background:#241F1C; display:flex; gap:4px; overflow-x:auto; padding:0 12px; }
+  .gw-tab { color:#fff; opacity:.7; font-size:0.84rem; padding:12px 12px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; }
+  .gw-tab:hover { opacity:1; }
+  .gw-tab.on { opacity:1; font-weight:600; border-bottom-color:var(--coral); }
+</style>
+<style>
+/* === index === */
+#tab-home * { box-sizing:border-box; }#tab-home html, #tab-home body { overflow-x:hidden; width:100%; }#tab-home body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; line-height:1.5; }#tab-home .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }#tab-home h1, #tab-home h2, #tab-home h3 { font-family:'Fraunces',Georgia,serif; font-weight:600; margin:0; letter-spacing:-0.01em; }#tab-home a { color:inherit; }#tab-home header { position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:var(--paper); border-bottom:1px solid var(--line); }#tab-home .nav { display:flex; align-items:center; justify-content:space-between; padding:18px 20px; max-width:1100px; margin:0 auto; }#tab-home .logo { font-family:'Fraunces',serif; font-size:1.25rem; font-weight:700; }#tab-home .nav a.signin { font-size:0.88rem; text-decoration:none; border:1.5px solid var(--ink); padding:8px 18px; border-radius:100px; }#tab-home .hero { position:relative; padding:64px 0 80px; overflow:hidden; }#tab-home .blob { position:absolute; border-radius:50%; }#tab-home .blob1 { width:240px; height:240px; background:var(--gold); opacity:.5; top:-50px; right:-40px; }#tab-home .blob2 { width:150px; height:150px; background:var(--lav); opacity:.35; bottom:-30px; right:170px; }#tab-home .hero .inner { position:relative; z-index:1; }#tab-home .eyebrow { display:inline-block; background:var(--card); border:1px solid var(--line); padding:7px 16px; border-radius:100px; color:var(--coral-deep); font-size:0.88rem; font-weight:500; margin-bottom:22px; }#tab-home .hero h1 { font-size:clamp(2.3rem,5.5vw,3.9rem); max-width:15ch; line-height:1.08; }#tab-home .hero p { max-width:46ch; color:var(--ink-soft); font-size:1.12rem; margin-top:22px; }#tab-home .hero-ctas { margin-top:32px; display:flex; gap:14px; flex-wrap:wrap; }#tab-home .btn-primary, #tab-home .btn-secondary { display:inline-block; padding:14px 26px; border-radius:100px; text-decoration:none; font-size:0.98rem; font-weight:600; }#tab-home .btn-primary { background:var(--coral); color:#fff; }#tab-home .btn-secondary { border:1.5px solid var(--ink); }#tab-home .strip { padding:40px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }#tab-home .strip h2 { font-size:1.25rem; max-width:34ch; margin-bottom:28px; font-weight:500; color:var(--ink-soft); }#tab-home .strip h2 strong { color:var(--ink); font-weight:600; }#tab-home .strip-row { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }#tab-home .strip-item .num { font-family:'Fraunces',serif; font-size:1.9rem; font-weight:700; color:var(--coral-deep); }#tab-home .strip-item .label { font-size:0.85rem; color:var(--ink-soft); margin-top:6px; max-width:18ch; }#tab-home .pillars { padding:70px 0; }#tab-home .kicker { color:var(--coral-deep); font-size:0.9rem; margin-bottom:12px; font-weight:600; }#tab-home .pillars h2 { font-size:clamp(1.7rem,3.2vw,2.5rem); max-width:20ch; }#tab-home .grid { margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }#tab-home .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px; }#tab-home .dot { width:30px; height:30px; border-radius:9px; margin-bottom:16px; }#tab-home .card:nth-child(1) .dot {background:var(--coral);}#tab-home .card:nth-child(2) .dot {background:var(--gold);}#tab-home .card:nth-child(3) .dot {background:var(--teal);}#tab-home .card:nth-child(4) .dot {background:var(--lav);}#tab-home .card h3 { font-size:1.18rem; margin-bottom:8px; }#tab-home .card p { color:var(--ink-soft); margin:0; max-width:30ch; font-size:0.95rem; }#tab-home .how { background:var(--card); padding:70px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }#tab-home .how h2 { font-size:clamp(1.7rem,3.2vw,2.5rem); max-width:18ch; margin-bottom:44px; }#tab-home .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }#tab-home .step .n { font-family:'Fraunces',serif; color:var(--coral-deep); font-size:1.1rem; margin-bottom:10px; font-weight:700; }#tab-home .step h3 { font-size:1.05rem; margin-bottom:8px; }#tab-home .step p { color:var(--ink-soft); font-size:0.92rem; margin:0; }#tab-home .giver { padding:70px 0; }#tab-home .giver-inner { max-width:600px; }#tab-home .giver .kicker { color:var(--teal); }#tab-home .giver h2 { font-size:clamp(1.6rem,3vw,2.2rem); }#tab-home .giver p { color:var(--ink-soft); margin-top:16px; font-size:1.05rem; }#tab-home .cta { background:var(--coral); padding:56px 44px; text-align:left; border-radius:16px; margin:0 20px 60px; max-width:1060px; margin-inline:auto; }#tab-home .cta h2 { font-size:clamp(1.7rem,3.2vw,2.5rem); max-width:18ch; color:#fff; }#tab-home .cta p { color:#FFE4DC; margin-top:14px; max-width:44ch; }#tab-home .cta .btn-primary { margin-top:24px; background:#fff; color:var(--coral-deep); }#tab-home footer { padding:32px 0; color:var(--ink-soft); font-size:0.88rem; }
 
-  header { position:sticky; top:0; z-index:10; background:var(--paper); border-bottom:1px solid var(--line); }
-  .topbar { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; max-width:780px; margin:0 auto; flex-wrap:wrap; gap:10px; }
-  .logo { font-size:1.2rem; font-weight:700; }
-  .io-btns { display:flex; gap:8px; }
-  .io-btn { font-size:0.78rem; padding:7px 12px; border-radius:100px; border:1px solid var(--line); background:var(--card); cursor:pointer; color:var(--ink-soft); }
-  .tabs { display:flex; gap:4px; max-width:780px; margin:0 auto; padding:0 20px; overflow-x:auto; }
-  .tab { padding:10px 13px; font-size:0.87rem; font-weight:500; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
-  .tab.on { color:var(--ink); font-weight:600; border-bottom-color:var(--coral); }
+  @media (max-width:760px){#tab-home .strip-row {grid-template-columns:1fr 1fr;}#tab-home .steps {grid-template-columns:1fr 1fr;}#tab-home .grid {grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){#tab-home .nav {padding:14px 20px;}#tab-home .blob1 {width:130px;height:130px;top:-30px;right:-30px;}#tab-home .blob2 {width:90px;height:90px;right:40px;bottom:0;}#tab-home .hero {padding:40px 0 50px;}#tab-home .hero p {font-size:1rem;}#tab-home .btn-primary, #tab-home .btn-secondary {width:100%;text-align:center;}#tab-home .strip, #tab-home .pillars, #tab-home .how, #tab-home .giver {padding-top:44px;padding-bottom:44px;}#tab-home .cta {margin:0 16px 40px;padding:36px 24px;}#tab-home .cta h2 {max-width:100%;}
+  }
 
-  .view { display:none; padding-top:24px; }
-  .view.on { display:block; }
 
-  .section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:16px; }
-  .section h3 { font-size:1rem; margin-bottom:4px; }
-  .section .desc { font-size:0.84rem; color:var(--ink-soft); margin-bottom:14px; }
+/* === dashboard === */
+#tab-dashboard * { box-sizing:border-box; }#tab-dashboard html, #tab-dashboard body { overflow-x:hidden; width:100%; }#tab-dashboard body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; line-height:1.5; }#tab-dashboard h1, #tab-dashboard h2, #tab-dashboard h3 { font-family:'Fraunces',Georgia,serif; font-weight:600; margin:0; letter-spacing:-0.01em; }#tab-dashboard a { color:inherit; text-decoration:none; }#tab-dashboard .app { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }#tab-dashboard .side { border-right:1px solid var(--line); padding:24px 18px; display:flex; flex-direction:column; }#tab-dashboard .logo { font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem; padding:6px 10px 28px; }#tab-dashboard .snav a { display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; color:var(--ink-soft); font-size:0.94rem; font-weight:500; margin-bottom:2px; }#tab-dashboard .snav a.active { background:var(--card); color:var(--ink); border:1px solid var(--line); }#tab-dashboard .snav a:hover { background:var(--card); }#tab-dashboard .dot-ic { width:8px; height:8px; border-radius:50%; flex-shrink:0; }#tab-dashboard .side-foot { margin-top:auto; padding:12px; font-size:0.85rem; color:var(--ink-soft); }#tab-dashboard .main { padding:30px 36px 60px; }#tab-dashboard .topbar { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px; flex-wrap:wrap; gap:16px; }#tab-dashboard .topbar h1 { font-size:1.7rem; }#tab-dashboard .topbar p { color:var(--ink-soft); margin-top:6px; font-size:0.96rem; }#tab-dashboard .btn { display:inline-block; padding:11px 20px; border-radius:100px; background:var(--coral); color:#fff; font-weight:600; font-size:0.9rem; }#tab-dashboard .section-group { margin-bottom:28px; border-radius:18px; padding:24px; border:1px solid var(--line); }#tab-dashboard .profile-section { background:#FFFBEF; border-top:4px solid var(--gold); }#tab-dashboard .occasion-section { background:#F7F5FC; border-top:4px solid var(--lav); }#tab-dashboard .section-label-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:10px; flex-wrap:nowrap; }#tab-dashboard .section-label { font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; display:flex; align-items:center; gap:9px; min-width:0; flex-shrink:1; overflow:hidden; }#tab-dashboard .section-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }#tab-dashboard .section-sub { font-family:'Inter',sans-serif; font-weight:400; font-size:0.84rem; color:var(--ink-soft); white-space:nowrap; }#tab-dashboard .section-btn { font-size:0.86rem; font-weight:600; text-decoration:none; padding:9px 18px; border-radius:100px; white-space:nowrap; flex-shrink:0; }
+  @media (max-width:640px){#tab-dashboard .section-sub {display:none;}#tab-dashboard .section-label-row {flex-wrap:wrap;}
+  }#tab-dashboard .section-btn.coral { background:var(--coral); color:#fff; }#tab-dashboard .section-btn.gold { background:transparent; border:1.5px solid var(--ink); color:var(--ink); }#tab-dashboard .row2 { display:grid; grid-template-columns:1.3fr 1fr; gap:18px; margin-bottom:0; }#tab-dashboard .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }#tab-dashboard .card h3 { font-size:1.02rem; margin-bottom:14px; }#tab-dashboard .profile-bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin:10px 0 8px; }#tab-dashboard .profile-bar-fill { height:100%; width:70%; background:var(--coral); }#tab-dashboard .profile-meta { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--ink-soft); }#tab-dashboard .nudges { margin-top:16px; display:flex; flex-direction:column; gap:8px; }#tab-dashboard .nudge { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:var(--paper); border-radius:10px; font-size:0.88rem; }#tab-dashboard .nudge a { color:var(--coral-deep); font-weight:600; }#tab-dashboard .goal-top { display:flex; justify-content:space-between; align-items:baseline; }#tab-dashboard .goal-name { font-weight:600; }#tab-dashboard .goal-amt { font-size:0.85rem; color:var(--ink-soft); }#tab-dashboard .gbar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin:8px 0 2px; }#tab-dashboard .gbar-fill { height:100%; background:var(--teal); }#tab-dashboard .tabs { display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:18px; }#tab-dashboard .tab { padding:9px 4px; margin-right:18px; font-size:0.92rem; font-weight:500; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; display:flex; align-items:center; gap:6px; }#tab-dashboard .tab.on { color:var(--ink); font-weight:600; border-bottom-color:var(--coral); }#tab-dashboard .tab-count { background:var(--line); color:var(--ink-soft); font-size:0.74rem; font-weight:600; padding:1px 7px; border-radius:100px; }#tab-dashboard .tab.on .tab-count { background:#FFF1EE; color:var(--coral-deep); }#tab-dashboard .profile-list { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }#tab-dashboard .profile-row-item { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 16px; text-decoration:none; color:inherit; transition:border-color .15s; }#tab-dashboard .profile-row-item:hover { border-color:var(--gold); }#tab-dashboard .profile-row-item.off { background:var(--paper); }#tab-dashboard .pc-ic { font-size:1rem; flex-shrink:0; }#tab-dashboard .pc-title { font-family:'Fraunces',serif; font-size:0.96rem; white-space:nowrap; flex-shrink:0; }#tab-dashboard .pc-sum { font-size:0.84rem; color:var(--ink-soft); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }#tab-dashboard .pc-minibar { width:70px; height:6px; background:var(--line); border-radius:3px; overflow:hidden; flex-shrink:0; display:inline-block; }#tab-dashboard .pc-minibar-fill { display:block; height:100%; background:var(--teal); }#tab-dashboard .pc-pct { font-size:0.8rem; color:var(--ink-soft); flex-shrink:0; width:32px; text-align:right; }#tab-dashboard .pc-turnon { font-size:0.82rem; font-weight:600; color:var(--coral-deep); flex-shrink:0; white-space:nowrap; }
+  @media (max-width:560px){#tab-dashboard .pc-sum {display:none;} }#tab-dashboard .pages-list { display:flex; flex-direction:column; gap:8px; }#tab-dashboard .page-row { display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 16px; text-decoration:none; color:inherit; transition:border-color .15s; }#tab-dashboard a.page-row:hover { border-color:var(--lav); }#tab-dashboard .page-sw { width:10px; height:10px; border-radius:50%; flex-shrink:0; }#tab-dashboard .page-sw.c1 {background:var(--coral);}#tab-dashboard .page-sw.c2 {background:var(--gold);}#tab-dashboard .page-sw.c3 {background:var(--lav);}#tab-dashboard .page-row-body { flex:1; min-width:0; display:flex; align-items:baseline; gap:10px; }#tab-dashboard .page-row-body h4 { font-family:'Fraunces',serif; font-size:0.98rem; margin:0; white-space:nowrap; }#tab-dashboard .page-row-meta { font-size:0.82rem; color:var(--ink-soft); white-space:nowrap; }#tab-dashboard .chevron { color:var(--ink-soft); font-size:0.9rem; }#tab-dashboard .badge { display:inline-block; padding:3px 9px; border-radius:100px; font-size:0.74rem; font-weight:600; flex-shrink:0; }#tab-dashboard .badge.live { background:#E3F4EE; color:var(--teal); }#tab-dashboard .badge.exp { background:#FFF1E0; color:var(--coral-deep); }
+  @media (max-width:500px){#tab-dashboard .page-row-body {flex-direction:column; align-items:flex-start; gap:2px;} }#tab-dashboard .activity { display:flex; flex-direction:column; }#tab-dashboard .a-row { display:flex; justify-content:space-between; padding:12px 0; border-top:1px solid var(--line); font-size:0.9rem; }#tab-dashboard .a-row:first-child { border-top:none; }#tab-dashboard .a-who { font-weight:500; }#tab-dashboard .a-what { color:var(--ink-soft); }#tab-dashboard .a-when { color:var(--ink-soft); font-size:0.82rem; white-space:nowrap; }
 
-  input[type=text], textarea { width:100%; padding:11px 13px; border:1.5px solid var(--line); border-radius:10px; font-family:inherit; font-size:0.9rem; background:var(--paper); color:var(--ink); }
-  label.field-label { font-size:0.82rem; color:var(--ink-soft); display:block; margin-bottom:6px; }
-  .field { margin-bottom:14px; }
+  @media (max-width:860px){#tab-dashboard .app {grid-template-columns:1fr;}#tab-dashboard .side {display:none;}#tab-dashboard .main {padding:22px 18px 50px;}#tab-dashboard .row2 {grid-template-columns:1fr;}#tab-dashboard .section-group {padding:18px;border-radius:14px;}
+  }
 
-  .chip-row { display:flex; flex-wrap:wrap; gap:8px; }
-  .chip { padding:8px 14px; border-radius:100px; border:1.5px solid var(--line); font-size:0.86rem; cursor:pointer; background:var(--paper); color:var(--ink-soft); }
-  .chip.on { border-color:var(--coral); background:#FFF1EE; color:var(--coral-deep); font-weight:600; }
 
-  .item-row { display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:10px 13px; margin-bottom:7px; font-size:0.88rem; }
-  .item-row .x { color:var(--ink-soft); cursor:pointer; font-weight:700; }
-  .add-row { display:flex; gap:8px; margin-top:8px; }
-  .add-row input { flex:1; }
-  .add-btn { padding:11px 16px; border-radius:10px; background:var(--ink); color:#fff; font-weight:600; font-size:0.84rem; border:none; cursor:pointer; white-space:nowrap; }
+/* === profile === */
+#tab-profile * { box-sizing:border-box; }#tab-profile html, #tab-profile body { overflow-x:hidden; width:100%; }#tab-profile body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-profile h1, #tab-profile h2, #tab-profile h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-profile a { color:inherit; text-decoration:none; }#tab-profile .app { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }#tab-profile .side { border-right:1px solid var(--line); padding:24px 18px; display:flex; flex-direction:column; }#tab-profile .logo { font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem; padding:6px 10px 28px; }#tab-profile .snav a { display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; color:var(--ink-soft); font-size:0.94rem; font-weight:500; margin-bottom:2px; }#tab-profile .snav a.active { background:var(--card); color:var(--ink); border:1px solid var(--line); }#tab-profile .dot-ic { width:8px; height:8px; border-radius:50%; flex-shrink:0; }#tab-profile .main { padding:30px 36px 60px; max-width:720px; }#tab-profile .main > p.lead { color:var(--ink-soft); margin-bottom:28px; }#tab-profile .main h1 { font-size:1.6rem; margin-bottom:6px; }#tab-profile .toggle-section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:24px; }#tab-profile .toggle-section h3 { font-size:1.02rem; margin-bottom:4px; }#tab-profile .toggle-section .desc { font-size:0.84rem; color:var(--ink-soft); margin-bottom:16px; }#tab-profile .chip-row { display:flex; flex-wrap:wrap; gap:9px; }#tab-profile .chip { padding:9px 15px; border-radius:100px; border:1.5px solid var(--line); font-size:0.88rem; cursor:pointer; background:var(--paper); color:var(--ink-soft); }#tab-profile .chip.on { border-color:var(--coral); background:#FFF1EE; color:var(--coral-deep); font-weight:600; }#tab-profile .cat-block { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; }#tab-profile .cat-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }#tab-profile .cat-head h3 { font-size:1.05rem; }#tab-profile .cat-badge { font-size:0.74rem; background:#FFF1EE; color:var(--coral-deep); padding:3px 10px; border-radius:100px; font-weight:600; }#tab-profile .cat-desc { font-size:0.84rem; color:var(--ink-soft); margin-bottom:16px; }#tab-profile .item-list { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }#tab-profile .item { display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:11px 14px; font-size:0.9rem; }#tab-profile .item .x { color:var(--ink-soft); cursor:pointer; font-weight:700; }#tab-profile .item .meta { color:var(--ink-soft); font-size:0.82rem; }#tab-profile .goal-item { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:8px; }#tab-profile .goal-item .top { display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:6px; }#tab-profile .goal-item .top .amt { color:var(--ink-soft); font-size:0.82rem; }#tab-profile .gbar { height:6px; background:var(--line); border-radius:3px; overflow:hidden; }#tab-profile .gbar-fill { height:100%; background:var(--teal); }#tab-profile .add-row { display:flex; gap:8px; }#tab-profile input[type=text] { flex:1; padding:11px 14px; border:1.5px solid var(--line); border-radius:10px; font-family:inherit; font-size:0.9rem; }#tab-profile .add-btn { padding:11px 18px; border-radius:10px; background:var(--ink); color:#fff; font-weight:600; font-size:0.86rem; border:none; cursor:pointer; white-space:nowrap; }#tab-profile .goal-add { display:grid; grid-template-columns:2fr 1fr auto; gap:8px; }#tab-profile .avoid-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }#tab-profile .avoid-tag { background:var(--paper); border:1px solid var(--line); border-radius:100px; padding:6px 12px 6px 14px; font-size:0.84rem; color:var(--ink-soft); display:flex; align-items:center; gap:6px; }#tab-profile .surprise-levels { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:4px; }#tab-profile .slevel { border:1.5px solid var(--line); border-radius:12px; padding:14px; cursor:pointer; background:var(--paper); }#tab-profile .slevel.on { border-color:var(--coral); background:#FFF1EE; }#tab-profile .slevel-title { font-weight:600; font-size:0.88rem; margin-bottom:6px; }#tab-profile .slevel.on .slevel-title { color:var(--coral-deep); }#tab-profile .slevel-desc { font-size:0.78rem; color:var(--ink-soft); line-height:1.4; }
+  @media (max-width:700px){#tab-profile .surprise-levels {grid-template-columns:1fr 1fr;} }#tab-profile .save-bar { display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }#tab-profile .btn { padding:12px 22px; border-radius:100px; font-weight:600; font-size:0.9rem; border:none; cursor:pointer; }#tab-profile .btn-primary { background:var(--coral); color:#fff; }#tab-profile .btn-ghost { background:transparent; border:1.5px solid var(--ink); }
+  @media (max-width:860px){#tab-profile .app {grid-template-columns:1fr;}#tab-profile .side {display:none;}#tab-profile .main {padding:22px 18px 50px;}#tab-profile .goal-add {grid-template-columns:1fr;}#tab-profile .surprise-levels {grid-template-columns:1fr 1fr;} }
 
-  .goal-row { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:8px; }
-  .goal-row .top { display:flex; justify-content:space-between; font-size:0.88rem; margin-bottom:6px; }
-  .gbar { height:6px; background:var(--line); border-radius:3px; overflow:hidden; }
-  .gbar-fill { height:100%; background:var(--teal); }
-  .goal-add { display:grid; grid-template-columns:2fr 1fr auto; gap:8px; margin-top:8px; }
 
-  .slevels { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-  .slevel { border:1.5px solid var(--line); border-radius:12px; padding:13px; cursor:pointer; background:var(--paper); }
-  .slevel.on { border-color:var(--coral); background:#FFF1EE; }
-  .slevel-title { font-weight:600; font-size:0.86rem; margin-bottom:5px; }
-  .slevel.on .slevel-title { color:var(--coral-deep); }
-  .slevel-desc { font-size:0.76rem; color:var(--ink-soft); line-height:1.4; }
+/* === gift-page === */
+#tab-occ-birthday * { box-sizing:border-box; }#tab-occ-birthday html, #tab-occ-birthday body { overflow-x:hidden; width:100%; }#tab-occ-birthday body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-occ-birthday .wrap { max-width:760px; margin:0 auto; padding:0 20px; }#tab-occ-birthday h1, #tab-occ-birthday h2, #tab-occ-birthday h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-occ-birthday a { color:inherit; }#tab-occ-birthday .demo-strip { background:var(--ink); color:#fff; font-size:0.82rem; padding:9px 20px; display:flex; gap:16px; flex-wrap:wrap; }#tab-occ-birthday .demo-strip a { opacity:.75; text-decoration:none; }#tab-occ-birthday .demo-strip a:hover { opacity:1; }#tab-occ-birthday .demo-strip .cur { opacity:1; font-weight:600; }#tab-occ-birthday .cover { height:200px; background:linear-gradient(135deg,var(--coral),var(--gold)); position:relative; }#tab-occ-birthday .occ-badge { position:absolute; bottom:-22px; left:20px; background:var(--card); border-radius:100px; padding:6px 16px; font-size:0.82rem; font-weight:600; border:1px solid var(--line); }#tab-occ-birthday .profile-row { padding:40px 0 10px; display:flex; gap:18px; align-items:flex-start; }#tab-occ-birthday .avatar { width:68px; height:68px; border-radius:50%; background:var(--lav); flex-shrink:0; }#tab-occ-birthday .profile-row h1 { font-size:1.6rem; }#tab-occ-birthday .profile-row .sub { color:var(--ink-soft); font-size:0.92rem; margin-top:4px; }#tab-occ-birthday .message { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin:22px 0; font-family:'Fraunces',serif; font-style:italic; font-size:1.08rem; color:var(--ink); line-height:1.6; }#tab-occ-birthday .message .quo { color:var(--coral-deep); font-style:normal; font-weight:700; }#tab-occ-birthday .opts { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:28px 0; }#tab-occ-birthday .opt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; text-decoration:none; display:block; transition:border-color .15s; }#tab-occ-birthday .opt:hover { border-color:var(--coral); }#tab-occ-birthday .opt .ic { width:30px; height:30px; border-radius:9px; margin-bottom:12px; }#tab-occ-birthday .opt:nth-child(1) .ic {background:var(--coral);}#tab-occ-birthday .opt:nth-child(2) .ic {background:var(--teal);}#tab-occ-birthday .opt:nth-child(3) .ic {background:var(--gold);}#tab-occ-birthday .opt:nth-child(4) .ic {background:var(--lav);}#tab-occ-birthday .opt h3 { font-size:1.05rem; margin-bottom:6px; }#tab-occ-birthday .opt p { margin:0; color:var(--ink-soft); font-size:0.88rem; }#tab-occ-birthday .avoid { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:40px; }#tab-occ-birthday .avoid h3 { font-size:0.95rem; margin-bottom:10px; }#tab-occ-birthday .tags { display:flex; gap:8px; flex-wrap:wrap; }#tab-occ-birthday .tag { background:var(--paper); border:1px solid var(--line); border-radius:100px; padding:5px 12px; font-size:0.82rem; color:var(--ink-soft); }
 
-  .btn-primary { padding:13px 24px; border-radius:100px; background:var(--coral); color:#fff; font-weight:600; border:none; cursor:pointer; font-size:0.92rem; }
+  @media (max-width:600px){#tab-occ-birthday .opts {grid-template-columns:1fr;} }
 
-  /* Dashboard tinted sections */
-  .dash-section { border-radius:16px; padding:20px; margin-bottom:18px; border:1px solid var(--line); }
-  .dash-profile { background:#FFFBEF; border-top:4px solid var(--gold); }
-  .dash-occasion { background:#F7F5FC; border-top:4px solid var(--lav); }
-  .dash-label { font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
-  .dash-dot { width:9px; height:9px; border-radius:50%; }
-  .db-bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin:8px 0; }
-  .db-bar-fill { height:100%; background:var(--coral); }
-  .db-row { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--ink-soft); }
-  .cat-tabs { display:flex; gap:4px; border-bottom:1px solid var(--line); margin:16px 0 12px; }
-  .cat-tab { padding:7px 4px; margin-right:16px; font-size:0.86rem; font-weight:500; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; }
-  .cat-tab.on { color:var(--ink); font-weight:600; border-bottom-color:var(--lav); }
-  .pc-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line); font-size:0.88rem; }
-  .pc-row:first-child { border-top:none; }
-  .pc-sum { color:var(--ink-soft); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.84rem; }
-  .occ-preview-btn { display:inline-block; margin-top:10px; font-size:0.86rem; font-weight:600; color:var(--coral-deep); cursor:pointer; }
 
-  /* Occasion Page preview */
-  .occ-cover { height:140px; border-radius:14px; background:linear-gradient(135deg,var(--coral),var(--gold)); margin-bottom:16px; }
-  .occ-msg { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; font-family:'Fraunces',serif; font-style:italic; font-size:1.02rem; line-height:1.6; }
-  .occ-opts { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .occ-opt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
-  .occ-opt h4 { font-size:0.96rem; margin-bottom:4px; }
-  .occ-opt p { margin:0; font-size:0.82rem; color:var(--ink-soft); }
-  .avoid-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
-  .avoid-tag { background:var(--card); border:1px solid var(--line); border-radius:100px; padding:5px 12px; font-size:0.8rem; color:var(--ink-soft); }
+/* === new-home === */
+#tab-occ-newhome * { box-sizing:border-box; }#tab-occ-newhome html, #tab-occ-newhome body { overflow-x:hidden; width:100%; }#tab-occ-newhome body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-occ-newhome .wrap { max-width:760px; margin:0 auto; padding:0 20px; }#tab-occ-newhome h1, #tab-occ-newhome h2, #tab-occ-newhome h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-occ-newhome a { color:inherit; }#tab-occ-newhome .demo-strip { background:var(--ink); color:#fff; font-size:0.82rem; padding:9px 20px; display:flex; gap:16px; flex-wrap:wrap; }#tab-occ-newhome .demo-strip a { opacity:.75; text-decoration:none; }#tab-occ-newhome .demo-strip a:hover { opacity:1; }#tab-occ-newhome .demo-strip .cur { opacity:1; font-weight:600; }#tab-occ-newhome .cover { height:200px; background:linear-gradient(135deg,var(--teal),var(--gold)); position:relative; }#tab-occ-newhome .occ-badge { position:absolute; bottom:-22px; left:20px; background:var(--card); border-radius:100px; padding:6px 16px; font-size:0.82rem; font-weight:600; border:1px solid var(--line); }#tab-occ-newhome .profile-row { padding:40px 0 10px; display:flex; gap:18px; align-items:flex-start; }#tab-occ-newhome .avatar { width:68px; height:68px; border-radius:50%; background:var(--lav); flex-shrink:0; }#tab-occ-newhome .profile-row h1 { font-size:1.6rem; }#tab-occ-newhome .profile-row .sub { color:var(--ink-soft); font-size:0.92rem; margin-top:4px; }#tab-occ-newhome .message { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin:22px 0; font-family:'Fraunces',serif; font-style:italic; font-size:1.08rem; color:var(--ink); line-height:1.6; }#tab-occ-newhome .message .quo { color:var(--teal); font-style:normal; font-weight:700; }#tab-occ-newhome .curation-note { background:#E3F4EE; border:1px solid #BFE4D9; color:#145B4F; border-radius:12px; padding:12px 16px; font-size:0.84rem; margin-bottom:22px; }#tab-occ-newhome .opts { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:28px 0; }#tab-occ-newhome .opt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; text-decoration:none; display:block; transition:border-color .15s; }#tab-occ-newhome .opt:hover { border-color:var(--teal); }#tab-occ-newhome .opt .ic { width:30px; height:30px; border-radius:9px; margin-bottom:12px; }#tab-occ-newhome .opt:nth-child(1) .ic {background:var(--teal);}#tab-occ-newhome .opt:nth-child(2) .ic {background:var(--gold);}#tab-occ-newhome .opt h3 { font-size:1.05rem; margin-bottom:6px; }#tab-occ-newhome .opt p { margin:0; color:var(--ink-soft); font-size:0.88rem; }#tab-occ-newhome .avoid { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:40px; }#tab-occ-newhome .avoid h3 { font-size:0.95rem; margin-bottom:10px; }#tab-occ-newhome .tags { display:flex; gap:8px; flex-wrap:wrap; }#tab-occ-newhome .tag { background:var(--paper); border:1px solid var(--line); border-radius:100px; padding:5px 12px; font-size:0.82rem; color:var(--ink-soft); }
 
-  /* Settings */
-  .set-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-top:1px solid var(--line); }
-  .set-row:first-child { border-top:none; }
-  .set-label { font-size:0.92rem; }
-  .set-badge { font-size:0.76rem; font-weight:600; padding:4px 10px; border-radius:100px; }
-  .set-badge.pub { background:#E3F4EE; color:var(--teal); }
-  .set-badge.priv { background:var(--line); color:var(--ink-soft); }
+  @media (max-width:600px){#tab-occ-newhome .opts {grid-template-columns:1fr;} }
 
-  /* Impact & Community (sample/static) */
-  .sample-tag { display:inline-block; background:var(--line); color:var(--ink-soft); font-size:0.74rem; font-weight:600; padding:4px 10px; border-radius:100px; margin-bottom:16px; }
-  .impact-cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-  .impact-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
-  .impact-card .ic { width:30px; height:30px; border-radius:9px; margin-bottom:10px; }
-  .impact-card h3 { font-size:1.3rem; }
-  .impact-card p { margin:4px 0 0; font-size:0.84rem; color:var(--ink-soft); }
-  .story { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:10px; display:flex; gap:12px; }
-  .story .av { width:32px; height:32px; border-radius:50%; flex-shrink:0; }
-  .story p { margin:0; font-size:0.88rem; }
-  .story .who { color:var(--ink-soft); font-size:0.78rem; margin-top:4px; }
-  .feed-item { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:10px; display:flex; gap:12px; }
 
-  .home-hero { padding:30px 0 36px; }
-  .home-eyebrow { display:inline-block; background:var(--card); border:1px solid var(--line); padding:6px 14px; border-radius:100px; color:var(--coral-deep); font-size:0.85rem; font-weight:500; margin-bottom:18px; }
-  .home-h1 { font-size:clamp(1.8rem,5vw,2.6rem); max-width:15ch; line-height:1.1; }
-  .home-lead { max-width:46ch; color:var(--ink-soft); font-size:1.05rem; margin-top:16px; }
-  .home-ctas { margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; }
-  .btn-secondary { padding:13px 24px; border-radius:100px; border:1.5px solid var(--ink); background:transparent; font-weight:600; cursor:pointer; font-size:0.92rem; }
-  .home-strip { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; }
-  .home-strip h2 { font-size:1.05rem; font-weight:500; color:var(--ink-soft); margin-bottom:18px; }
-  .home-strip h2 strong { color:var(--ink); font-weight:600; }
-  .home-strip-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-  .home-num { font-family:'Fraunces',serif; font-size:1.5rem; font-weight:700; color:var(--coral-deep); }
-  .home-label { font-size:0.78rem; color:var(--ink-soft); margin-top:4px; }
-  .home-kicker { color:var(--coral-deep); font-size:0.85rem; font-weight:600; margin-bottom:8px; }
-  .home-pillars { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .home-pillars h4 { font-size:0.96rem; margin-bottom:6px; }
-  .home-pillars p { margin:0; font-size:0.84rem; color:var(--ink-soft); }
-  .home-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-  .home-step-n { font-family:'Fraunces',serif; color:var(--coral-deep); font-weight:700; font-size:0.95rem; margin-bottom:6px; }
-  .home-steps h4 { font-size:0.9rem; margin-bottom:4px; }
-  .home-steps p { margin:0; font-size:0.8rem; color:var(--ink-soft); }
-  .home-cta { background:var(--coral); border-radius:16px; padding:30px 26px; margin-bottom:16px; }
-  @media (max-width:600px){ .home-strip-row{grid-template-columns:1fr 1fr;} .home-pillars{grid-template-columns:1fr;} .home-steps{grid-template-columns:1fr 1fr;} }
-  .empty-note { text-align:center; color:var(--ink-soft); font-size:0.9rem; padding:30px 0; }
-  @media (max-width:600px){ .occ-opts{grid-template-columns:1fr;} .slevels{grid-template-columns:1fr;} .goal-add{grid-template-columns:1fr;} .impact-cards{grid-template-columns:1fr;} }
+/* === giving === */
+#tab-giving * { box-sizing:border-box; }#tab-giving html, #tab-giving body { overflow-x:hidden; width:100%; }#tab-giving body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-giving .wrap { max-width:720px; margin:0 auto; padding:30px 20px 60px; }#tab-giving h1, #tab-giving h2, #tab-giving h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-giving a { color:inherit; }#tab-giving .back { font-size:0.88rem; color:var(--ink-soft); text-decoration:none; }#tab-giving .head { margin:20px 0 28px; }#tab-giving .head h1 { font-size:1.6rem; }#tab-giving .head p { color:var(--ink-soft); margin-top:6px; font-size:0.95rem; }#tab-giving .section { margin-bottom:30px; }#tab-giving .section-head { display:flex; align-items:center; gap:8px; margin-bottom:14px; }#tab-giving .section-head h3 { font-size:1.1rem; }#tab-giving .goal-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:10px; }#tab-giving .goal-top { display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:8px; }#tab-giving .goal-top .amt { color:var(--ink-soft); font-size:0.85rem; }#tab-giving .gbar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin-bottom:12px; }#tab-giving .gbar-fill { height:100%; background:var(--teal); }#tab-giving .give-btn { padding:9px 18px; border-radius:100px; background:var(--coral); color:#fff; font-weight:600; font-size:0.86rem; text-decoration:none; display:inline-block; }#tab-giving .item-row { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:14px; }#tab-giving .item-row p { margin:0; font-size:0.95rem; }#tab-giving .give-btn-outline { padding:9px 16px; border-radius:100px; border:1.5px solid var(--teal); color:var(--teal); font-weight:600; font-size:0.84rem; background:transparent; white-space:nowrap; text-decoration:none; }#tab-giving .surprise-box { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }#tab-giving .surprise-box p { margin:0 0 14px; color:var(--ink-soft); font-size:0.92rem; }#tab-giving .surprise-level-tag { display:inline-block; background:#FFF1EE; color:var(--coral-deep); font-size:0.8rem; font-weight:600; padding:5px 12px; border-radius:100px; }#tab-giving .surprise-row { display:flex; gap:8px; font-size:0.86rem; margin-bottom:8px; flex-wrap:wrap; }#tab-giving .surprise-label { color:var(--ink-soft); flex-shrink:0; min-width:110px; }#tab-giving .surprise-val { color:var(--ink); }#tab-giving .surprise-row.avoid .surprise-val { color:var(--coral-deep); }#tab-giving .surprise-confirm { margin-top:12px; font-size:0.86rem; color:var(--teal); background:#E3F4EE; padding:10px 14px; border-radius:10px; }#tab-giving .choice-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }#tab-giving .choice-tag { background:var(--paper); border:1px solid var(--line); border-radius:100px; padding:7px 14px; font-size:0.85rem; color:var(--ink-soft); }
+
+
+/* === contribute === */
+#tab-contribute * { box-sizing:border-box; }#tab-contribute html, #tab-contribute body { overflow-x:hidden; width:100%; }#tab-contribute body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-contribute .wrap { max-width:620px; margin:0 auto; padding:30px 20px 60px; }#tab-contribute h1, #tab-contribute h2, #tab-contribute h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-contribute a { color:inherit; }#tab-contribute .back { font-size:0.88rem; color:var(--ink-soft); text-decoration:none; }#tab-contribute .head { margin:20px 0 26px; }#tab-contribute .kicker { color:var(--coral-deep); font-size:0.88rem; font-weight:600; margin-bottom:8px; }#tab-contribute .head h1 { font-size:1.7rem; max-width:18ch; }#tab-contribute .goal-card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:22px; }#tab-contribute .goal-top { display:flex; justify-content:space-between; font-size:0.9rem; color:var(--ink-soft); margin-bottom:8px; }#tab-contribute .gbar { height:10px; background:var(--line); border-radius:5px; overflow:hidden; }#tab-contribute .gbar-fill { height:100%; width:40%; background:var(--teal); }#tab-contribute .goal-sub { margin-top:10px; font-size:0.85rem; color:var(--ink-soft); }#tab-contribute .amounts { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }#tab-contribute .amt { background:var(--card); border:1.5px solid var(--line); border-radius:10px; padding:14px 0; text-align:center; font-weight:600; cursor:pointer; }#tab-contribute .amt.sel { border-color:var(--coral); background:#FFF1EE; color:var(--coral-deep); }#tab-contribute .custom { width:100%; padding:14px; border:1.5px solid var(--line); border-radius:10px; font-size:1rem; font-family:inherit; margin-bottom:20px; }#tab-contribute .msg-box { width:100%; padding:14px; border:1.5px solid var(--line); border-radius:10px; font-family:inherit; font-size:0.95rem; resize:vertical; min-height:70px; margin-bottom:22px; }#tab-contribute .btn { display:block; width:100%; text-align:center; padding:15px; border-radius:100px; background:var(--coral); color:#fff; font-weight:600; border:none; font-size:1rem; cursor:pointer; }#tab-contribute .note { text-align:center; font-size:0.82rem; color:var(--ink-soft); margin-top:12px; }
+
+
+/* === settings === */
+#tab-settings * { box-sizing:border-box; }#tab-settings html, #tab-settings body { overflow-x:hidden; width:100%; }#tab-settings body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-settings h1, #tab-settings h2, #tab-settings h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-settings a { color:inherit; text-decoration:none; }#tab-settings .app { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }#tab-settings .side { border-right:1px solid var(--line); padding:24px 18px; display:flex; flex-direction:column; }#tab-settings .logo { font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem; padding:6px 10px 28px; }#tab-settings .snav a { display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; color:var(--ink-soft); font-size:0.94rem; font-weight:500; margin-bottom:2px; }#tab-settings .snav a.active { background:var(--card); color:var(--ink); border:1px solid var(--line); }#tab-settings .dot-ic { width:8px; height:8px; border-radius:50%; flex-shrink:0; }#tab-settings .main { padding:30px 36px 60px; max-width:640px; }#tab-settings .main h1 { font-size:1.6rem; margin-bottom:6px; }#tab-settings .main > p { color:var(--ink-soft); margin-bottom:30px; }#tab-settings .card { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:16px; overflow:hidden; }#tab-settings .card h3 { font-size:1rem; padding:18px 20px 4px; }#tab-settings .row { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-top:1px solid var(--line); }#tab-settings .row-label { font-size:0.95rem; }#tab-settings .row-desc { font-size:0.82rem; color:var(--ink-soft); margin-top:2px; }#tab-settings select { padding:8px 12px; border-radius:8px; border:1.5px solid var(--line); font-family:inherit; font-size:0.88rem; background:var(--paper); }#tab-settings .sel-public { color:var(--teal); border-color:var(--teal); }#tab-settings .sel-shared { color:var(--gold); border-color:var(--gold); }#tab-settings .sel-private { color:var(--ink-soft); }
+  @media (max-width:860px){#tab-settings .app {grid-template-columns:1fr;}#tab-settings .side {display:none;}#tab-settings .main {padding:22px 18px 50px;} }
+
+
+/* === impact === */
+#tab-impact * { box-sizing:border-box; }#tab-impact html, #tab-impact body { overflow-x:hidden; width:100%; }#tab-impact body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-impact .wrap { max-width:760px; margin:0 auto; padding:34px 20px 60px; }#tab-impact h1, #tab-impact h2, #tab-impact h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-impact a { color:inherit; }#tab-impact .kicker { color:var(--coral-deep); font-size:0.88rem; font-weight:600; margin-bottom:8px; }#tab-impact .wrap > h1 { font-size:1.7rem; margin-bottom:10px; }#tab-impact .wrap > p.lead { color:var(--ink-soft); margin-bottom:30px; max-width:52ch; }#tab-impact .cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:30px; }#tab-impact .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; }#tab-impact .card .ic { width:34px; height:34px; border-radius:10px; margin-bottom:14px; }#tab-impact .card h3 { font-size:1.4rem; font-family:'Fraunces',serif; margin-bottom:6px; }#tab-impact .card p { margin:0; color:var(--ink-soft); font-size:0.9rem; }#tab-impact .story { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:14px; display:flex; gap:14px; align-items:flex-start; }#tab-impact .story .av { width:36px; height:36px; border-radius:50%; flex-shrink:0; }#tab-impact .story p { margin:0; font-size:0.92rem; }#tab-impact .story .who { color:var(--ink-soft); font-size:0.82rem; margin-top:4px; }#tab-impact .methodology { font-size:0.8rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:16px; margin-top:20px; }
+  @media (max-width:600px){#tab-impact .cards {grid-template-columns:1fr;} }
+
+
+/* === community === */
+#tab-community * { box-sizing:border-box; }#tab-community html, #tab-community body { overflow-x:hidden; width:100%; }#tab-community body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }#tab-community .wrap { max-width:680px; margin:0 auto; padding:34px 20px 60px; }#tab-community h1, #tab-community h2, #tab-community h3 { font-family:'Fraunces',serif; font-weight:600; margin:0; }#tab-community a { color:inherit; }#tab-community .kicker { color:var(--lav); font-size:0.88rem; font-weight:600; margin-bottom:8px; }#tab-community .wrap > h1 { font-size:1.7rem; margin-bottom:10px; }#tab-community .wrap > p.lead { color:var(--ink-soft); margin-bottom:28px; max-width:50ch; }#tab-community .scope-note { background:#F2EFFC; border:1px solid #DCD6F5; color:#443C7A; border-radius:12px; padding:14px 18px; font-size:0.86rem; margin-bottom:28px; }#tab-community .feed { display:flex; flex-direction:column; gap:12px; }#tab-community .item { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; gap:14px; }#tab-community .av { width:38px; height:38px; border-radius:50%; flex-shrink:0; }#tab-community .item-body p { margin:0; font-size:0.94rem; }#tab-community .item-body .when { font-size:0.8rem; color:var(--ink-soft); margin-top:4px; }#tab-community .only-connections { text-align:center; font-size:0.82rem; color:var(--ink-soft); margin-top:24px; }
+
 </style>
 </head>
 <body>
+<div class="gw-bar">
+  <div class="gw-tab on" data-tab="home" onclick="showTab('home')">Homepage</div>
+  <div class="gw-tab" data-tab="profile" onclick="showTab('profile')">My Gift Profile</div>
+  <div class="gw-tab" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</div>
+  <div class="gw-tab" data-tab="occ-birthday" onclick="showTab('occ-birthday')">Occasion: Birthday</div>
+  <div class="gw-tab" data-tab="occ-newhome" onclick="showTab('occ-newhome')">Occasion: New Home</div>
+  <div class="gw-tab" data-tab="giving" onclick="showTab('giving')">Giving</div>
+  <div class="gw-tab" data-tab="settings" onclick="showTab('settings')">Settings</div>
+  <div class="gw-tab" data-tab="impact" onclick="showTab('impact')">Impact</div>
+  <div class="gw-tab" data-tab="community" onclick="showTab('community')">Community</div>
+</div>
+
+<div id="tab-home" class="tabview" style="display:none;">
+
 
 <header>
-  <div class="topbar">
-    <div class="logo">🎁 Giftwise</div>
-    <div class="io-btns">
-      <button class="io-btn" onclick="exportProfile()">⬇ Save to file</button>
-      <button class="io-btn" onclick="document.getElementById('importFile').click()">⬆ Load from file</button>
-      <button class="io-btn" onclick="resetSample()">↺ Reset to sample</button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProfile(event)">
-    </div>
-  </div>
-  <div class="tabs">
-    <div class="tab on" data-view="home" onclick="switchView(this)">Homepage</div>
-    <div class="tab" data-view="profile" onclick="switchView(this)">My Profile</div>
-    <div class="tab" data-view="dashboard" onclick="switchView(this)">Dashboard</div>
-    <div class="tab" data-view="occasion" onclick="switchView(this)">Occasion Page</div>
-    <div class="tab" data-view="giving" onclick="switchView(this)">Giving</div>
-    <div class="tab" data-view="settings" onclick="switchView(this)">Settings</div>
-    <div class="tab" data-view="impact" onclick="switchView(this)">Impact</div>
-    <div class="tab" data-view="community" onclick="switchView(this)">Community</div>
+  <div class="nav">
+    <div class="logo">Giftwise</div>
+    <a class="signin" href="#" onclick="showTab('dashboard');return false;">Sign in</a>
   </div>
 </header>
 
-<div class="wrap">
+<section class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="wrap inner">
+    <div class="eyebrow">Give more meaning. Waste less.</div>
+    <h1>Let people give you what truly matters.</h1>
+    <p>Share what would genuinely make you happy, so family and friends can give with confidence — and every gift feels personal, thoughtful, and meaningful.</p>
+    <div class="hero-ctas">
+      <a href="#" onclick="showTab('dashboard');return false;" class="btn-primary">Create my Gift Profile</a>
+      <a href="#how" class="btn-secondary">See how it works</a>
+    </div>
+  </div>
+</section>
 
-  <!-- HOMEPAGE VIEW -->
-  <div class="view on" id="view-home">
-    <div class="home-hero">
-      <div class="home-eyebrow">Give more meaning. Waste less.</div>
-      <h1 class="home-h1">Let people give you what truly matters.</h1>
-      <p class="home-lead">Share what would genuinely make you happy, so family and friends can give with confidence — and every gift feels personal, thoughtful, and meaningful.</p>
-      <div class="home-ctas">
-        <button class="btn-primary" onclick="goTo('profile')">Create my Gift Profile</button>
-        <button class="btn-secondary" onclick="goTo('dashboard')">See a sample profile</button>
+<section class="strip">
+  <div class="wrap">
+    <h2>Most gifts don't miss by much — <strong>they just miss what the person actually needed.</strong></h2>
+    <div class="strip-row">
+      <div class="strip-item"><div class="num">4 in 10</div><div class="label">gifts go unused within a year</div></div>
+      <div class="strip-item"><div class="num">62%</div><div class="label">of people have re-gifted something they received</div></div>
+      <div class="strip-item"><div class="num">$16B</div><div class="label">spent yearly on gifts that go unwanted</div></div>
+      <div class="strip-item"><div class="num">0</div><div class="label">of this is anyone's fault — it's a guessing problem</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pillars">
+  <div class="wrap">
+    <div class="kicker">Why Giftwise exists</div>
+    <h2>The point isn't to give less. It's to give better.</h2>
+    <div class="grid">
+      <div class="card"><div class="dot"></div><h3>More Meaning</h3><p>Give something they'll genuinely appreciate — not just what might sell.</p></div>
+      <div class="card"><div class="dot"></div><h3>More Purpose</h3><p>Help someone make progress on something they're working toward.</p></div>
+      <div class="card"><div class="dot"></div><h3>Less Waste</h3><p>Don't buy something that quietly ends up unused.</p></div>
+      <div class="card"><div class="dot"></div><h3>Better Giving</h3><p>Make choosing a gift easier for everyone, on both sides.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h2>From profile to gift, in four steps</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Create your profile</h3><p>Share what you love, what you're working toward, and what you don't need.</p></div>
+      <div class="step"><div class="n">02</div><h3>Add an occasion, if you have one</h3><p>Birthday, wedding, new baby — or skip this. Your profile works year-round for anytime gifts, thank-yous, and "just because."</p></div>
+      <div class="step"><div class="n">03</div><h3>Share it</h3><p>Send a link for a specific moment, or keep your profile open for anyone, anytime.</p></div>
+      <div class="step"><div class="n">04</div><h3>They give their way</h3><p>Help a goal, give an experience, support a cause, or simply surprise you — occasion or not.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="giver">
+  <div class="wrap giver-inner">
+    <div class="kicker">For the giver</div>
+    <h2>They sent you their Giftwise page. Now what?</h2>
+    <p>Don't worry about finding the perfect gift — you already know what matters to them. Choose how you'd like to make them happy: help a goal, give time, support a cause, or let them surprise themselves.</p>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Start with the person, not the product.</h2>
+    <p>Your profile is free, and you're in control of what's shared and with whom.</p>
+    <a href="#" class="btn-primary">Create my Gift Profile</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Giftwise — Give more meaning. Waste less.</div>
+</footer>
+
+
+</div>
+
+<div id="tab-dashboard" class="tabview" style="display:none;">
+
+
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1>Welcome back, Raj</h1>
+        <p>Here's what's happening with your profile and gift pages.</p>
       </div>
     </div>
 
-    <div class="home-strip">
-      <h2>Most gifts don't miss by much — <strong>they just miss what the person actually needed.</strong></h2>
-      <div class="home-strip-row">
-        <div><div class="home-num">4 in 10</div><div class="home-label">gifts go unused within a year</div></div>
-        <div><div class="home-num">62%</div><div class="home-label">of people have re-gifted something they received</div></div>
-        <div><div class="home-num">$16B</div><div class="home-label">spent yearly on gifts that go unwanted</div></div>
-        <div><div class="home-num">0</div><div class="home-label">of this is anyone's fault — it's a guessing problem</div></div>
+    <div class="section-group profile-section">
+      <div class="section-label-row">
+        <div class="section-label"><span class="section-dot" style="background:var(--gold)"></span>My Gift Profile <span class="section-sub">— always on, year-round</span></div>
+        <a href="#" onclick="showTab('profile');return false;" class="section-btn gold">Edit profile →</a>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h3>Profile completeness</h3>
+        <div class="profile-bar"><div class="profile-bar-fill"></div></div>
+        <div class="profile-meta"><span>70% complete</span><span>3 sections left</span></div>
+        <div class="nudges">
+          <div class="nudge"><span>Add your "Please Don't Buy Me" list</span><a href="#">Add →</a></div>
+          <div class="nudge"><span>Set your Surprise Me level</span><a href="#">Set →</a></div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab on" data-pstate="active" onclick="switchPTab(this)">Active <span class="tab-count">6</span></div>
+        <div class="tab" data-pstate="closed" onclick="switchPTab(this)">Closed <span class="tab-count">2</span></div>
+      </div>
+
+      <div class="profile-list">
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">🎯</span>
+          <span class="pc-title">Japan trip</span>
+          <span class="pc-sum">$1,200 of $3,000</span>
+          <span class="pc-minibar"><span class="pc-minibar-fill" style="width:40%"></span></span>
+          <span class="pc-pct">40%</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">🎯</span>
+          <span class="pc-title">New camera lens</span>
+          <span class="pc-sum">$0 of $450</span>
+          <span class="pc-minibar"><span class="pc-minibar-fill" style="width:0%"></span></span>
+          <span class="pc-pct">0%</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">💰</span>
+          <span class="pc-title">Give Me Choice</span>
+          <span class="pc-sum">Amazon gift card, Visa gift card, general contribution</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">🌎</span>
+          <span class="pc-title">Experiences</span>
+          <span class="pc-sum">Dinner, photography class, weekend trip</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">❤️</span>
+          <span class="pc-title">Causes</span>
+          <span class="pc-sum">Ocean Conservancy, Room to Read</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item" data-pstate="active">
+          <span class="pc-ic">🎲</span>
+          <span class="pc-title">Surprise Me</span>
+          <span class="pc-sum">Level: Surprise Me · hints: food, travel</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item off" data-pstate="closed" style="display:none;">
+          <span class="pc-ic">🕰️</span>
+          <span class="pc-title">Time / Help</span>
+          <span class="pc-sum">Not shown on your profile</span>
+          <span class="pc-turnon">Turn on →</span>
+        </a>
+        <a href="#" onclick="showTab('profile');return false;" class="profile-row-item off" data-pstate="closed" style="display:none;">
+          <span class="pc-ic">💝</span>
+          <span class="pc-title">Keepsake</span>
+          <span class="pc-sum">Not shown on your profile</span>
+          <span class="pc-turnon">Turn on →</span>
+        </a>
       </div>
     </div>
 
-    <div class="section">
-      <div class="home-kicker">Why Giftwise exists</div>
-      <h2 style="font-size:1.4rem;margin-bottom:16px;">The point isn't to give less. It's to give better.</h2>
-      <div class="home-pillars">
-        <div><h4>❤️ More Meaning</h4><p>Give something they'll genuinely appreciate.</p></div>
-        <div><h4>🎯 More Purpose</h4><p>Help someone make progress on a goal.</p></div>
-        <div><h4>🌎 Less Waste</h4><p>Don't buy something that ends up unused.</p></div>
-        <div><h4>😊 Better Giving</h4><p>Make choosing a gift easier for everyone.</p></div>
+    <div class="section-group occasion-section">
+      <div class="section-label-row">
+        <div class="section-label"><span class="section-dot" style="background:var(--lav)"></span>Occasion Pages <span class="section-sub">— temporary, tied to an event</span></div>
+        <a href="#" onclick="showTab('occ-birthday');return false;" class="section-btn coral">+ Create New Occasion</a>
+      </div>
+      <div class="tabs">
+        <div class="tab on" data-state="active" onclick="switchTab(this)">Active <span class="tab-count">2</span></div>
+        <div class="tab" data-state="closed" onclick="switchTab(this)">Closed <span class="tab-count">1</span></div>
+      </div>
+      <div class="pages-list">
+      <a href="#" onclick="showTab('occ-birthday');return false;" class="page-row" data-state="active">
+        <div class="page-sw c1"></div>
+        <div class="page-row-body"><h4>Raj's 30th Birthday</h4><span class="page-row-meta">Expires Oct 15</span></div>
+        <span class="badge live">Live</span>
+        <span class="chevron">→</span>
+      </a>
+      <a href="#" onclick="showTab('occ-newhome');return false;" class="page-row" data-state="active">
+        <div class="page-sw c2"></div>
+        <div class="page-row-body"><h4>New Home</h4><span class="page-row-meta">Expires Nov 2</span></div>
+        <span class="badge live">Live</span>
+        <span class="chevron">→</span>
+      </a>
+      <div class="page-row" data-state="closed" style="display:none; opacity:0.65; cursor:default;">
+        <div class="page-sw c3"></div>
+        <div class="page-row-body"><h4>Graduation 2025</h4><span class="page-row-meta">Ended Jun 1</span></div>
+        <span class="badge exp">Expired</span>
       </div>
     </div>
-
-    <div class="section">
-      <h2 style="font-size:1.4rem;margin-bottom:16px;">From profile to gift, in four steps</h2>
-      <div class="home-steps">
-        <div><div class="home-step-n">01</div><h4>Create your profile</h4><p>Share what you love and what you're working toward.</p></div>
-        <div><div class="home-step-n">02</div><h4>Add an occasion, if you have one</h4><p>Or skip this — your profile works year-round.</p></div>
-        <div><div class="home-step-n">03</div><h4>Share it</h4><p>Send a link, or keep your profile open for anyone.</p></div>
-        <div><div class="home-step-n">04</div><h4>They give their way</h4><p>Help a goal, give an experience, or surprise you.</p></div>
-      </div>
     </div>
 
-    <div class="home-cta">
-      <h2 style="color:#fff;font-size:1.5rem;">Start with the person, not the product.</h2>
-      <p style="color:#FFE4DC;margin-top:10px;">Your profile is free, and you're in control of what's shared.</p>
-      <button class="btn-primary" style="margin-top:16px;background:#fff;color:var(--coral-deep);" onclick="goTo('profile')">Create my Gift Profile</button>
+    <div class="card">
+      <h3>Recent activity</h3>
+      <div class="activity">
+        <div class="a-row"><span class="a-who">Mia T.</span><span class="a-what">contributed $100 to your Japan trip</span><span class="a-when">2d ago</span></div>
+        <div class="a-row"><span class="a-who">David K.</span><span class="a-what">viewed your 30th Birthday page</span><span class="a-when">3d ago</span></div>
+        <div class="a-row"><span class="a-who">Priya S.</span><span class="a-what">sent a thank-you for the dinner experience</span><span class="a-when">1w ago</span></div>
+      </div>
     </div>
   </div>
 
-  <!-- PROFILE VIEW -->
-  <div class="view" id="view-profile">
-    <div class="section">
-      <h3>About you</h3>
-      <div class="field"><label class="field-label">Your name</label><input type="text" id="f-name" oninput="save()"></div>
-      <div class="field"><label class="field-label">About me</label><textarea id="f-about" rows="2" oninput="save()"></textarea></div>
-      <div class="field"><label class="field-label">Interests</label><div class="chip-row" id="interests-list"></div>
-        <div class="add-row"><input type="text" id="interest-input" placeholder="Add an interest..."><button class="add-btn" onclick="addItem('interests','interest-input')">+ Add</button></div>
-      </div>
-    </div>
 
-    <div class="section">
+<script>
+  function switchTab(tab) {
+    const state = tab.getAttribute('data-state');
+    const group = tab.closest('.section-group');
+    group.querySelectorAll('.tab[data-state]').forEach(t => t.classList.toggle('on', t === tab));
+    group.querySelectorAll('.page-row').forEach(c => {
+      c.style.display = (c.getAttribute('data-state') === state) ? '' : 'none';
+    });
+  }
+  function switchPTab(tab) {
+    const state = tab.getAttribute('data-pstate');
+    const group = tab.closest('.section-group');
+    group.querySelectorAll('.tab[data-pstate]').forEach(t => t.classList.toggle('on', t === tab));
+    group.querySelectorAll('.profile-row-item').forEach(c => {
+      c.style.display = (c.getAttribute('data-pstate') === state) ? '' : 'none';
+    });
+  }
+</script>
+
+</div>
+
+<div id="tab-profile" class="tabview" style="display:none;">
+
+
+  <div class="main">
+    <h1>My Gift Profile</h1>
+    <p class="lead">This is what family and friends see year-round, at giftwise.com/raj.</p>
+
+    <div class="toggle-section">
       <h3>What makes you happy</h3>
-      <div class="desc">Turn categories on to show them on your Occasion Page.</div>
+      <div class="desc">Turn categories on to show them on your profile. Each one gets its own section below to fill in.</div>
       <div class="chip-row">
-        <div class="chip" data-cat="goals" onclick="toggleCat(this)">🎯 My Goals</div>
-        <div class="chip" data-cat="choice" onclick="toggleCat(this)">💰 Give Me Choice</div>
-        <div class="chip" data-cat="experiences" onclick="toggleCat(this)">🌎 Experiences</div>
-        <div class="chip" data-cat="causes" onclick="toggleCat(this)">❤️ Causes</div>
+        <div class="chip on" data-cat="goals" onclick="toggleCat(this)">🎯 My Goals</div>
+        <div class="chip on" data-cat="choice" onclick="toggleCat(this)">💰 Give Me Choice</div>
+        <div class="chip on" data-cat="experiences" onclick="toggleCat(this)">🌎 Experiences</div>
+        <div class="chip on" data-cat="causes" onclick="toggleCat(this)">❤️ Causes I Care About</div>
         <div class="chip" data-cat="timehelp" onclick="toggleCat(this)">🕰️ Time / Help</div>
-        <div class="chip" data-cat="surprise" onclick="toggleCat(this)">🎲 Surprise Me</div>
-        <div class="chip" data-cat="keepsake" onclick="toggleCat(this)">💝 Keepsake</div>
+        <div class="chip on" data-cat="surprise" onclick="toggleCat(this)">🎲 Surprise Me</div>
+        <div class="chip" data-cat="meaningful" onclick="toggleCat(this)">💝 Keepsake</div>
       </div>
     </div>
 
-    <div class="section" id="sec-goals" style="display:none;">
-      <h3>🎯 My Goals</h3>
-      <div id="goals-list"></div>
+    <div class="cat-block" id="sec-goals">
+      <div class="cat-head"><h3>🎯 My Goals</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">Things you're working toward that someone could help with.</div>
+      <div class="goal-item">
+        <div class="top"><span><strong>Japan trip</strong></span><span class="amt">$1,200 of $3,000</span></div>
+        <div class="gbar"><div class="gbar-fill" style="width:40%"></div></div>
+      </div>
+      <div class="goal-item">
+        <div class="top"><span><strong>New camera lens</strong></span><span class="amt">$0 of $450</span></div>
+        <div class="gbar"><div class="gbar-fill" style="width:0%"></div></div>
+      </div>
       <div class="goal-add">
-        <input type="text" id="goal-name" placeholder="Goal name">
-        <input type="text" id="goal-target" placeholder="Target $">
-        <button class="add-btn" onclick="addGoal()">+ Add</button>
+        <input type="text" placeholder="Goal name, e.g. New car">
+        <input type="text" placeholder="Target amount">
+        <button class="add-btn">+ Add goal</button>
       </div>
     </div>
 
-    <div class="section" id="sec-choice" style="display:none;">
-      <h3>💰 Give Me Choice</h3>
-      <div id="choice-list"></div>
-      <div class="add-row"><input type="text" id="choice-input" placeholder="e.g. Amazon gift card"><button class="add-btn" onclick="addItem('choice','choice-input')">+ Add</button></div>
-    </div>
-
-    <div class="section" id="sec-experiences" style="display:none;">
-      <h3>🌎 Experiences</h3>
-      <div id="experiences-list"></div>
-      <div class="add-row"><input type="text" id="experiences-input" placeholder="e.g. Dinner at a new restaurant"><button class="add-btn" onclick="addItem('experiences','experiences-input')">+ Add</button></div>
-    </div>
-
-    <div class="section" id="sec-causes" style="display:none;">
-      <h3>❤️ Causes</h3>
-      <div id="causes-list"></div>
-      <div class="add-row"><input type="text" id="causes-input" placeholder="e.g. Ocean Conservancy"><button class="add-btn" onclick="addItem('causes','causes-input')">+ Add</button></div>
-    </div>
-
-    <div class="section" id="sec-timehelp" style="display:none;">
-      <h3>🕰️ Time / Help</h3>
-      <div id="timehelp-list"></div>
-      <div class="add-row"><input type="text" id="timehelp-input" placeholder="e.g. Help me move"><button class="add-btn" onclick="addItem('timehelp','timehelp-input')">+ Add</button></div>
-    </div>
-
-    <div class="section" id="sec-keepsake" style="display:none;">
-      <h3>💝 Keepsake</h3>
-      <div id="keepsake-list"></div>
-      <div class="add-row"><input type="text" id="keepsake-input" placeholder="e.g. A framed photo"><button class="add-btn" onclick="addItem('keepsake','keepsake-input')">+ Add</button></div>
-    </div>
-
-    <div class="section" id="sec-surprise" style="display:none;">
-      <h3>🎲 Surprise Me level</h3>
-      <div class="slevels">
-        <div class="slevel" data-level="guided" onclick="setLevel(this)"><div class="slevel-title">Guided</div><div class="slevel-desc">Choose from the things I've mentioned.</div></div>
-        <div class="slevel" data-level="decide" onclick="setLevel(this)"><div class="slevel-title">You Decide</div><div class="slevel-desc">Pick something that fits my interests, even if it's not on my list.</div></div>
-        <div class="slevel" data-level="trust" onclick="setLevel(this)"><div class="slevel-title">Full Trust</div><div class="slevel-desc">I trust you completely — you still won't see anything from my avoid list.</div></div>
+    <div class="cat-block" id="sec-choice">
+      <div class="cat-head"><h3>💰 Give Me Choice</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">Flexible options — gift cards, cash, anything open-ended.</div>
+      <div class="item-list">
+        <div class="item">Amazon gift card <span class="x">×</span></div>
+        <div class="item">Visa gift card <span class="x">×</span></div>
+        <div class="item">General contribution, any amount <span class="x">×</span></div>
       </div>
-      <div class="field" style="margin-top:14px;"><label class="field-label">Surprise me with</label><div class="chip-row" id="hints-list"></div>
-        <div class="add-row"><input type="text" id="hint-input" placeholder="e.g. Food"><button class="add-btn" onclick="addItem('surpriseHints','hint-input')">+ Add</button></div>
-      </div>
+      <div class="add-row"><input type="text" placeholder="Add a choice option..."><button class="add-btn">+ Add</button></div>
     </div>
 
-    <div class="section">
+    <div class="cat-block" id="sec-experiences">
+      <div class="cat-head"><h3>🌎 Experiences</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">Things that can be booked or arranged — by anyone, even someone far away.</div>
+      <div class="item-list">
+        <div class="item">Dinner at a new restaurant <span class="x">×</span></div>
+        <div class="item">Photography class <span class="x">×</span></div>
+        <div class="item">Weekend trip somewhere new <span class="x">×</span></div>
+      </div>
+      <div class="add-row"><input type="text" placeholder="Add an experience..."><button class="add-btn">+ Add</button></div>
+    </div>
+
+    <div class="cat-block" id="sec-causes">
+      <div class="cat-head"><h3>❤️ Causes I Care About</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">Causes or nonprofits a giver could donate to in your honor.</div>
+      <div class="item-list">
+        <div class="item">Ocean Conservancy <span class="x">×</span></div>
+        <div class="item">Room to Read <span class="x">×</span></div>
+      </div>
+      <div class="add-row"><input type="text" placeholder="Add a cause or nonprofit..."><button class="add-btn">+ Add</button></div>
+    </div>
+
+    <div class="cat-block" id="sec-surprise">
+      <div class="cat-head"><h3>🎲 Surprise Me</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">How much freedom should givers have?</div>
+      <div class="surprise-levels">
+        <div class="slevel"><div class="slevel-title">Guided</div><div class="slevel-desc">Choose from the things I've mentioned.</div></div>
+        <div class="slevel on"><div class="slevel-title">You Decide</div><div class="slevel-desc">Pick something that fits my interests, even if it's not on my list.</div></div>
+        <div class="slevel"><div class="slevel-title">Full Trust</div><div class="slevel-desc">I trust you completely — you still won't see anything from my avoid list.</div></div>
+      </div>
+      <div class="cat-desc" style="margin:18px 0 8px;">Surprise me with:</div>
+      <div class="item-list">
+        <div class="item">Food <span class="x">×</span></div>
+        <div class="item">Travel-related <span class="x">×</span></div>
+      </div>
+      <div class="add-row"><input type="text" placeholder="Add a surprise-me hint..."><button class="add-btn">+ Add</button></div>
+    </div>
+
+    <div class="cat-block" id="sec-timehelp" style="display:none;">
+      <div class="cat-head"><h3>🕰️ Time / Help</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">Things that only count because it's you, in person — not something that can be booked.</div>
+      <div class="item-list">
+        <div class="item">Help me move <span class="x">×</span></div>
+        <div class="item">Teach me your recipe for paella <span class="x">×</span></div>
+        <div class="item">Just spend an afternoon together <span class="x">×</span></div>
+      </div>
+      <div class="add-row"><input type="text" placeholder="Add something you'd love help with..."><button class="add-btn">+ Add</button></div>
+    </div>
+
+    <div class="cat-block" id="sec-meaningful" style="display:none;">
+      <div class="cat-head"><h3>💝 Keepsake</h3><span class="cat-badge">On profile</span></div>
+      <div class="cat-desc">A physical thing to keep — a photo, something handmade, or an object tied to a memory.</div>
+      <div class="item-list">
+        <div class="item">A framed photo from a trip together <span class="x">×</span></div>
+        <div class="item">Something handmade <span class="x">×</span></div>
+      </div>
+      <div class="add-row"><input type="text" placeholder="Add a keepsake idea..."><button class="add-btn">+ Add</button></div>
+    </div>
+
+    <div class="toggle-section">
       <h3>Please don't buy me</h3>
-      <div id="avoid-list"></div>
-      <div class="add-row"><input type="text" id="avoid-input" placeholder="e.g. Clothing"><button class="add-btn" onclick="addItem('avoid','avoid-input')">+ Add</button></div>
-    </div>
-
-    <div class="section">
-      <h3>Occasion Page message</h3>
-      <div class="desc">What should people know for this specific occasion?</div>
-      <div class="field"><label class="field-label">Occasion type</label><input type="text" id="f-occtype" oninput="save()"></div>
-      <textarea id="f-occmsg" rows="3" oninput="save()"></textarea>
-    </div>
-  </div>
-
-  <!-- DASHBOARD VIEW -->
-  <div class="view" id="view-dashboard">
-    <div class="dash-section dash-profile">
-      <div class="dash-label"><span class="dash-dot" style="background:var(--gold)"></span>My Gift Profile <span style="font-weight:400;font-size:0.82rem;color:var(--ink-soft);">— always on, year-round</span></div>
-      <h3 id="db-greeting" style="font-size:1.1rem;">Welcome!</h3>
-      <div class="db-bar"><div class="db-bar-fill" id="db-completeness-bar" style="width:0%"></div></div>
-      <div class="db-row"><span id="db-completeness-text">0% complete</span><span>Fill in My Profile to grow this</span></div>
-      <div class="cat-tabs">
-        <div class="cat-tab on" data-pstate="active" onclick="switchCatTab(this)">Active</div>
-        <div class="cat-tab" data-pstate="closed" onclick="switchCatTab(this)">Closed</div>
+      <div class="desc">Categories you'd rather not receive — applies across your whole profile.</div>
+      <div class="avoid-tags">
+        <div class="avoid-tag">Clothing <span class="x">×</span></div>
+        <div class="avoid-tag">Home décor <span class="x">×</span></div>
+        <div class="avoid-tag">Kitchen gadgets <span class="x">×</span></div>
       </div>
-      <div id="db-active-list"></div>
+      <div class="add-row"><input type="text" placeholder="Add something to avoid..."><button class="add-btn">+ Add</button></div>
     </div>
-    <div class="dash-section dash-occasion">
-      <div class="dash-label"><span class="dash-dot" style="background:var(--lav)"></span>Occasion Page <span style="font-weight:400;font-size:0.82rem;color:var(--ink-soft);">— temporary, tied to an event</span></div>
-      <h3 id="db-occ-title" style="font-size:1.05rem;">No occasion set up yet</h3>
-      <p id="db-occ-sub" style="color:var(--ink-soft);font-size:0.86rem;margin-top:4px;"></p>
-      <div class="occ-preview-btn" onclick="switchView(document.querySelector('[data-view=occasion]'))">View Occasion Page →</div>
+
+    <div class="toggle-section">
+      <h3>About me</h3>
+      <textarea rows="3" style="width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:0.92rem;">Always planning my next trip, happiest behind a camera, and trying to cook my way through every region of Japan before I actually get there.</textarea>
+    </div>
+
+    <div class="save-bar">
+      <button class="btn btn-ghost">Preview profile</button>
+      <button class="btn btn-primary">Save changes</button>
     </div>
   </div>
 
-  <!-- OCCASION PAGE VIEW -->
-  <div class="view" id="view-occasion">
-    <div class="occ-cover"></div>
-    <h1 id="occ-title">Your Occasion Page</h1>
-    <p id="occ-sub" style="color:var(--ink-soft); margin-top:4px;"></p>
-    <div class="occ-msg" id="occ-message-box"></div>
-    <div class="occ-opts" id="occ-opts-list"></div>
-    <div class="avoid-tags" id="occ-avoid-list"></div>
-  </div>
+<script>
+  
+  
+  function toggleCat(chip) {
+    const cat = chip.getAttribute('data-cat');
+    const section = document.getElementById('sec-' + cat);
+    chip.classList.toggle('on');
+    if (section) {
+      const nowOn = chip.classList.contains('on');
+      section.style.display = nowOn ? '' : 'none';
+      const badge = section.querySelector('.cat-badge');
+      if (badge) badge.textContent = nowOn ? 'On profile' : 'Off profile';
+      if (nowOn) section.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }
+</script>
 
-  <!-- GIVING VIEW -->
-  <div class="view" id="view-giving">
-    <h1>Ways to give</h1>
-    <p style="color:var(--ink-soft); margin-top:4px; margin-bottom:20px;">What a giver sees for this profile.</p>
-    <div id="giving-sections"></div>
-  </div>
+</div>
 
-  <!-- SETTINGS VIEW -->
-  <div class="view" id="view-settings">
-    <h1 style="margin-bottom:6px;">Privacy &amp; visibility</h1>
-    <p style="color:var(--ink-soft);margin-bottom:20px;">Choose who sees each category.</p>
-    <div class="section" id="settings-rows"></div>
-  </div>
+<div id="tab-occ-birthday" class="tabview" style="display:none;">
 
-  <!-- IMPACT VIEW (sample/static preview) -->
-  <div class="view" id="view-impact">
-    <div class="sample-tag">Sample preview — not tied to your edits</div>
-    <h1 style="margin-bottom:6px;">What giving better has meant for you</h1>
-    <p style="color:var(--ink-soft);margin-bottom:20px;">A simple look at how gifts and contributions have landed.</p>
-    <div class="impact-cards">
-      <div class="impact-card"><div class="ic" style="background:var(--coral)"></div><h3>3 goals</h3><p>Helped someone reach something they were working toward.</p></div>
-      <div class="impact-card"><div class="ic" style="background:var(--teal)"></div><h3>2 experiences</h3><p>Shared time or an experience instead of another object.</p></div>
-      <div class="impact-card"><div class="ic" style="background:var(--gold)"></div><h3>1 cause</h3><p>A contribution made in someone's honor.</p></div>
-      <div class="impact-card"><div class="ic" style="background:var(--lav)"></div><h3>5 thank-yous</h3><p>Gifts your recipients said they genuinely appreciated.</p></div>
+<div class="cover"><div class="occ-badge">🎂 Birthday · Occasion Page</div></div>
+
+<div class="wrap">
+  <div class="profile-row">
+    <div class="avatar"></div>
+    <div>
+      <h1>Raj's 30th Birthday</h1>
+      <div class="sub">Shared by Raj · Expires October 15</div>
     </div>
-    <h3 style="font-size:1.05rem;margin-bottom:12px;">What people told you</h3>
-    <div class="story"><div class="av" style="background:var(--coral)"></div><div><p>"This is exactly what I needed — thank you for asking first instead of guessing."</p><div class="who">— David K., after you helped fund his graduation goal</div></div></div>
-    <div class="story"><div class="av" style="background:var(--teal)"></div><div><p>"We had such a good time at that dinner. Best gift this year."</p><div class="who">— Priya, after her experience gift</div></div></div>
   </div>
 
-  <!-- COMMUNITY VIEW (sample/static preview) -->
-  <div class="view" id="view-community">
-    <div class="sample-tag">Sample preview — not tied to your edits</div>
-    <h1 style="margin-bottom:6px;">Activity from your connections</h1>
-    <p style="color:var(--ink-soft);margin-bottom:20px;">Only visible to people you've shared a page with — not a public feed.</p>
-    <div class="feed-item"><div class="av" style="background:var(--coral);width:32px;height:32px;border-radius:50%;flex-shrink:0;"></div><div><p style="margin:0;font-size:0.9rem;"><strong>Mia T.</strong> helped fund your Japan trip goal</p><div style="color:var(--ink-soft);font-size:0.78rem;margin-top:4px;">2 days ago</div></div></div>
-    <div class="feed-item"><div class="av" style="background:var(--teal);width:32px;height:32px;border-radius:50%;flex-shrink:0;"></div><div><p style="margin:0;font-size:0.9rem;"><strong>Priya S.</strong> sent a thank-you for a dinner experience</p><div style="color:var(--ink-soft);font-size:0.78rem;margin-top:4px;">1 week ago</div></div></div>
+  <div class="message"><span class="quo">"</span>I don't need more stuff this year. What would make me happiest is helping me get closer to my Japan trip, or just spending time together.<span class="quo">"</span></div>
+
+  <div class="opts">
+    <a href="#" onclick="showTab('giving','goals');return false;" class="opt"><div class="ic"></div><h3>Help Me Reach a Goal</h3><p>Contribute toward my Japan trip — $1,200 of $3,000 raised.</p></a>
+    <a href="#" onclick="showTab('giving','experiences');return false;" class="opt"><div class="ic"></div><h3>Give Me an Experience</h3><p>Dinner, a class, or something to do together.</p></a>
+    <a href="#" onclick="showTab('giving','causes');return false;" class="opt"><div class="ic"></div><h3>Support a Cause</h3><p>Donate to something I care about, in my honor.</p></a>
+    <a href="#" onclick="showTab('giving','choice');return false;" class="opt"><div class="ic"></div><h3>Give Me Choice</h3><p>A gift card or flexible contribution works great too.</p></a>
+    <a href="#" onclick="showTab('giving','surprise');return false;" class="opt"><div class="ic"></div><h3>Surprise Me</h3><p>I trust you — choose something that fits my interests.</p></a>
   </div>
+
+  <div class="avoid">
+    <h3>Please don't buy me</h3>
+    <div class="tags"><span class="tag">Clothing</span><span class="tag">Home décor</span><span class="tag">Kitchen gadgets</span></div>
+  </div>
+</div>
+
+
+
+</div>
+
+<div id="tab-occ-newhome" class="tabview" style="display:none;">
+
+<div class="cover"><div class="occ-badge">🏡 New Home · Occasion Page</div></div>
+
+<div class="wrap">
+  <div class="profile-row">
+    <div class="avatar"></div>
+    <div>
+      <h1>Raj's New Home</h1>
+      <div class="sub">Shared by Raj · Expires November 2</div>
+    </div>
+  </div>
+
+  <div class="message"><span class="quo">"</span>We just moved in and could use a hand getting settled — whether that's helping us furnish the place or just a gift card for whatever we end up needing.<span class="quo">"</span></div>
+
+  <div class="curation-note">Raj chose to show only Goals and Give Me Choice on this page — his other categories (Experiences, Causes, Surprise Me) stay on his year-round profile but aren't part of this one.</div>
+
+  <div class="opts">
+    <a href="#" onclick="showTab('giving','goals');return false;" class="opt"><div class="ic"></div><h3>Help Me Reach a Goal</h3><p>Contribute toward furnishing the living room — $400 of $1,500 raised.</p></a>
+    <a href="#" onclick="showTab('giving','choice');return false;" class="opt"><div class="ic"></div><h3>Give Me Choice</h3><p>A home store gift card or flexible contribution.</p></a>
+  </div>
+
+  <div class="avoid">
+    <h3>Please don't buy me</h3>
+    <div class="tags"><span class="tag">Wall art</span><span class="tag">Throw pillows</span><span class="tag">Scented candles</span></div>
+  </div>
+</div>
+
+
+
+</div>
+
+<div id="tab-giving" class="tabview" style="display:none;">
+
+<div class="wrap">
+  <a href="#" onclick="showTab('occ-birthday');return false;" class="back">← Back to Raj's Birthday page</a>
+  <div class="head">
+    <h1>Ways to give to Raj</h1>
+    <p>Everything Raj has made public — pick whichever way feels right.</p>
+  </div>
+
+  <div class="section" id="goals">
+    <div class="section-head">🎯<h3>Help a goal</h3></div>
+    <div class="goal-card">
+      <div class="goal-top"><span><strong>Japan trip</strong></span><span class="amt">$1,200 of $3,000</span></div>
+      <div class="gbar"><div class="gbar-fill" style="width:40%"></div></div>
+      <a href="#" onclick="showTab('contribute');return false;" class="give-btn">Contribute</a>
+    </div>
+    <div class="goal-card">
+      <div class="goal-top"><span><strong>New camera lens</strong></span><span class="amt">$0 of $450</span></div>
+      <div class="gbar"><div class="gbar-fill" style="width:0%"></div></div>
+      <a href="#" onclick="showTab('contribute');return false;" class="give-btn">Contribute</a>
+    </div>
+  </div>
+
+  <div class="section" id="experiences">
+    <div class="section-head">🌎<h3>Give an experience</h3></div>
+    <div class="item-row"><p>Dinner at a new restaurant</p><a href="#" class="give-btn-outline">Plan this</a></div>
+    <div class="item-row"><p>Photography class</p><a href="#" class="give-btn-outline">Plan this</a></div>
+    <div class="item-row"><p>Weekend trip somewhere new</p><a href="#" class="give-btn-outline">Plan this</a></div>
+  </div>
+
+  <div class="section" id="causes">
+    <div class="section-head">❤️<h3>Support a cause</h3></div>
+    <div class="item-row"><p>Ocean Conservancy</p><a href="#" class="give-btn-outline">Donate in his honor</a></div>
+    <div class="item-row"><p>Room to Read</p><a href="#" class="give-btn-outline">Donate in his honor</a></div>
+  </div>
+
+  <div class="section" id="choice">
+    <div class="section-head">💰<h3>Give me choice</h3></div>
+    <div class="choice-tags">
+      <span class="choice-tag">Amazon gift card</span>
+      <span class="choice-tag">Visa gift card</span>
+      <span class="choice-tag">General contribution, any amount</span>
+    </div>
+    <a href="#" onclick="showTab('contribute');return false;" class="give-btn">Send a gift card or contribution</a>
+  </div>
+
+  <div class="section" id="surprise">
+    <div class="section-head">🎲<h3>Surprise me</h3></div>
+    <div class="surprise-box">
+      <div class="surprise-level-tag">Level: You Decide</div>
+      <p style="margin-top:10px;">Pick something that fits Raj's interests, even if it's not something he's listed.</p>
+      <div class="surprise-row"><span class="surprise-label">Surprise him with</span><span class="surprise-val">Food, travel-related</span></div>
+      <div class="surprise-row avoid"><span class="surprise-label">Please avoid</span><span class="surprise-val">Clothing, home décor, kitchen gadgets</span></div>
+      <button class="give-btn-outline" style="border:none;cursor:pointer;" onclick="confirmSurprise(this)">I'll surprise him</button>
+      <div class="surprise-confirm" style="display:none;">✓ Got it — Raj won't be notified of what you're planning, just that a surprise is coming.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  
+  function confirmSurprise(btn) {
+    btn.style.display = 'none';
+    btn.nextElementSibling.style.display = 'block';
+  }
+</script>
+
+</div>
+
+<div id="tab-contribute" class="tabview" style="display:none;">
+
+<div class="wrap">
+  <a href="#" onclick="showTab('giving');return false;" class="back">← Back to all ways to give</a>
+  <div class="head">
+    <div class="kicker">Help a goal</div>
+    <h1>Contribute to Raj's Japan trip</h1>
+  </div>
+  <div class="goal-card">
+    <div class="goal-top"><span>$1,200 raised</span><span>Goal: $3,000</span></div>
+    <div class="gbar"><div class="gbar-fill"></div></div>
+    <div class="goal-sub">3 people have contributed so far · Any amount helps</div>
+  </div>
+  <div class="amounts">
+    <div class="amt">$25</div>
+    <div class="amt sel">$50</div>
+    <div class="amt">$100</div>
+    <div class="amt">$250</div>
+  </div>
+  <input class="custom" placeholder="Or enter a custom amount">
+  <textarea class="msg-box" placeholder="Add a note for Raj (optional)">Hope this gets you one step closer to Japan 🎉</textarea>
+  <button class="btn">Contribute $50</button>
+  <div class="note">Giftwise doesn't take a cut of your contribution.</div>
+</div>
+
+
+</div>
+
+<div id="tab-settings" class="tabview" style="display:none;">
+
+
+  <div class="main">
+    <h1>Privacy & visibility</h1>
+    <p>Choose who sees each part of your Gift Profile.</p>
+    <div class="card">
+      <h3>Profile sections</h3>
+      <div class="row"><div><div class="row-label">About Me</div></div><select class="sel-public"><option>Public</option><option>Shared only</option><option>Private</option></select></div>
+      <div class="row"><div><div class="row-label">Interests</div></div><select class="sel-public"><option>Public</option><option>Shared only</option><option>Private</option></select></div>
+      <div class="row"><div><div class="row-label">Gift Preferences</div></div><select class="sel-public"><option>Public</option><option>Shared only</option><option>Private</option></select></div>
+      <div class="row"><div><div class="row-label">Causes</div></div><select class="sel-public"><option>Public</option><option>Shared only</option><option>Private</option></select></div>
+      <div class="row"><div><div class="row-label">Goals</div><div class="row-desc">Visible to people you've shared a page with</div></div><select class="sel-shared"><option>Shared only</option><option>Public</option><option>Private</option></select></div>
+      <div class="row"><div><div class="row-label">Financial information</div><div class="row-desc">Never shown, even if linked to a goal</div></div><select class="sel-private" disabled><option>Private</option></select></div>
+    </div>
+    <div class="card">
+      <h3>Account</h3>
+      <div class="row"><div class="row-label">Email notifications</div><select><option>On</option><option>Off</option></select></div>
+      <div class="row"><div class="row-label">Who can find my profile</div><select><option>Anyone with the link</option><option>Shared only</option></select></div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div id="tab-impact" class="tabview" style="display:none;">
+
+<div class="wrap">
+  <div class="kicker">Your impact</div>
+  <h1>What giving better has meant for you</h1>
+  <p class="lead">A simple look at how your gifts and contributions have landed — in plain terms, not projections.</p>
+
+  <div class="cards">
+    <div class="card"><div class="ic" style="background:var(--coral)"></div><h3>3 goals</h3><p>You've helped someone reach something they were working toward, instead of giving something unused.</p></div>
+    <div class="card"><div class="ic" style="background:var(--teal)"></div><h3>2 experiences</h3><p>Shared time or an experience given, instead of another object.</p></div>
+    <div class="card"><div class="ic" style="background:var(--gold)"></div><h3>1 cause</h3><p>A contribution made in someone's honor.</p></div>
+    <div class="card"><div class="ic" style="background:var(--lav)"></div><h3>5 thank-yous</h3><p>Gifts your recipients told you they genuinely appreciated.</p></div>
+  </div>
+
+  <h3 style="font-size:1.1rem; margin-bottom:14px;">What people told you</h3>
+  <div class="story"><div class="av" style="background:var(--coral)"></div><div><p>"This is exactly what I needed — thank you for asking first instead of guessing."</p><div class="who">— David K., after you helped fund his graduation goal</div></div></div>
+  <div class="story"><div class="av" style="background:var(--teal)"></div><div><p>"We had such a good time at that dinner. Best gift this year."</p><div class="who">— Priya, after her experience gift</div></div></div>
+
+  <div class="methodology">Giftwise shows only what you and your recipients have actually reported — no estimated waste, carbon, or dollar-savings figures are shown until we have a methodology we're confident stands up to scrutiny.</div>
+</div>
+
+
+</div>
+
+<div id="tab-community" class="tabview" style="display:none;">
+
+<div class="wrap">
+  <div class="kicker">Community</div>
+  <h1>Gifting activity from your connections</h1>
+  <p class="lead">What's happened across goals, gift pages, and contributions among people you're already connected to.</p>
+  <div class="scope-note">This only shows activity between you and people you've shared a profile or gift page with — not a public feed, and not a place to discover new people.</div>
+  <div class="feed">
+    <div class="item"><div class="av" style="background:var(--coral)"></div><div class="item-body"><p><strong>Mia T.</strong> helped fund Raj's Japan trip goal</p><div class="when">2 days ago</div></div></div>
+    <div class="item"><div class="av" style="background:var(--teal)"></div><div class="item-body"><p><strong>Priya S.</strong> sent a thank-you for a dinner experience</p><div class="when">1 week ago</div></div></div>
+    <div class="item"><div class="av" style="background:var(--gold)"></div><div class="item-body"><p><strong>David K.</strong> created a Occasion Page for his Graduation</p><div class="when">2 weeks ago</div></div></div>
+  </div>
+  <div class="only-connections">That's everything — Community only ever shows people already in your circle.</div>
+</div>
+
 
 </div>
 
 <script>
-const sampleState = {
-  name: 'Raj', about: "Always planning my next trip, happiest behind a camera, and trying to cook my way through every region of Japan before I actually get there.",
-  occtype: 'Birthday', occmsg: "I don't need more stuff this year. What would make me happiest is helping me get closer to my Japan trip, or just spending time together.",
-  interests: ['Travel','Photography','Cooking'],
-  goals: [{name:'Japan trip', target:3000, raised:1200}, {name:'New camera lens', target:450, raised:0}],
-  choice: ['Amazon gift card','Visa gift card','General contribution, any amount'],
-  experiences: ['Dinner at a new restaurant','Photography class','Weekend trip somewhere new'],
-  causes: ['Ocean Conservancy','Room to Read'],
-  timehelp: ['Help me move','Teach me your recipe for paella'],
-  keepsake: ['A framed photo from a trip together','Something handmade'],
-  avoid: ['Clothing','Home décor','Kitchen gadgets'],
-  surpriseLevel: 'decide',
-  surpriseHints: ['Food','Travel-related'],
-  categoriesOn: { goals:true, choice:true, experiences:true, causes:true, timehelp:false, surprise:true, keepsake:false }
-};
-let state = JSON.parse(JSON.stringify(sampleState));
-const catLabels = {goals:'🎯 My Goals', choice:'💰 Give Me Choice', experiences:'🌎 Experiences', causes:'❤️ Causes', timehelp:'🕰️ Time / Help', surprise:'🎲 Surprise Me', keepsake:'💝 Keepsake'};
-const listKeysMap = {goals:'goals', choice:'choice', experiences:'experiences', causes:'causes', timehelp:'timehelp', keepsake:'keepsake'};
-
-function load() {
-  try {
-    const saved = localStorage.getItem('giftwise_profile');
-    if (saved) state = JSON.parse(saved);
-  } catch(e) {}
-  if (!state.surpriseHints) state.surpriseHints = [];
-  hydrateForm();
-  renderAll();
-}
-
-function resetSample() {
-  if (!confirm('Reset back to the sample profile? Your edits will be lost unless saved to a file first.')) return;
-  state = JSON.parse(JSON.stringify(sampleState));
-  try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(e) {}
-  hydrateForm(); renderAll();
-}
-
-function save() {
-  state.name = document.getElementById('f-name').value;
-  state.about = document.getElementById('f-about').value;
-  state.occtype = document.getElementById('f-occtype').value;
-  state.occmsg = document.getElementById('f-occmsg').value;
-  try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(e) {}
-  renderAll();
-}
-
-function hydrateForm() {
-  document.getElementById('f-name').value = state.name || '';
-  document.getElementById('f-about').value = state.about || '';
-  document.getElementById('f-occtype').value = state.occtype || '';
-  document.getElementById('f-occmsg').value = state.occmsg || '';
-  document.querySelectorAll('.chip[data-cat]').forEach(c => {
-    const cat = c.getAttribute('data-cat');
-    c.classList.toggle('on', !!state.categoriesOn[cat]);
-    const sec = document.getElementById('sec-' + cat);
-    if (sec) sec.style.display = state.categoriesOn[cat] ? '' : 'none';
-  });
-  document.querySelectorAll('.slevel').forEach(l => l.classList.toggle('on', l.getAttribute('data-level') === state.surpriseLevel));
-}
-
-function toggleCat(chip) {
-  const cat = chip.getAttribute('data-cat');
-  state.categoriesOn[cat] = !state.categoriesOn[cat];
-  chip.classList.toggle('on', state.categoriesOn[cat]);
-  const sec = document.getElementById('sec-' + cat);
-  if (sec) sec.style.display = state.categoriesOn[cat] ? '' : 'none';
-  save();
-}
-
-function setLevel(el) {
-  state.surpriseLevel = el.getAttribute('data-level');
-  document.querySelectorAll('.slevel').forEach(l => l.classList.toggle('on', l === el));
-  save();
-}
-
-function addItem(key, inputId) {
-  const input = document.getElementById(inputId);
-  const val = input.value.trim();
-  if (!val) return;
-  if (!state[key]) state[key] = [];
-  state[key].push(val);
-  input.value = '';
-  save();
-  renderLists();
-}
-function removeItem(key, idx) { state[key].splice(idx,1); save(); renderLists(); }
-
-function addGoal() {
-  const name = document.getElementById('goal-name').value.trim();
-  const target = document.getElementById('goal-target').value.trim();
-  if (!name || !target) return;
-  state.goals.push({name, target: parseFloat(target)||0, raised:0});
-  document.getElementById('goal-name').value=''; document.getElementById('goal-target').value='';
-  save(); renderLists();
-}
-function removeGoal(idx) { state.goals.splice(idx,1); save(); renderLists(); }
-
-function renderLists() {
-  const simpleLists = ['interests','choice','experiences','causes','timehelp','keepsake','avoid','surpriseHints'];
-  simpleLists.forEach(key => {
-    const el = document.getElementById((key==='surpriseHints'?'hints':key) + '-list');
-    if (!el) return;
-    if (key === 'interests' || key === 'surpriseHints') {
-      el.innerHTML = (state[key]||[]).map((v,i) => `<div class="chip on" onclick="removeItem('${key}',${i})">${v} ✕</div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">None yet</span>';
-    } else {
-      el.innerHTML = (state[key]||[]).map((v,i) => `<div class="item-row">${v}<span class="x" onclick="removeItem('${key}',${i})">×</span></div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">None yet</span>';
-    }
-  });
-  const gl = document.getElementById('goals-list');
-  gl.innerHTML = state.goals.map((g,i) => `
-    <div class="goal-row">
-      <div class="top"><span><strong>${g.name}</strong></span><span class="x" onclick="removeGoal(${i})" style="color:var(--ink-soft);cursor:pointer;">×</span></div>
-      <div style="font-size:0.82rem;color:var(--ink-soft);margin-bottom:6px;">$${g.raised} of $${g.target}</div>
-      <div class="gbar"><div class="gbar-fill" style="width:${g.target>0?Math.min(100,g.raised/g.target*100):0}%"></div></div>
-    </div>`).join('') || '<span style="color:var(--ink-soft);font-size:0.85rem;">No goals yet</span>';
-}
-
-function computeCompleteness() {
-  let filled = 0, total = 5;
-  if (state.name) filled++;
-  if (state.about) filled++;
-  if (state.interests.length) filled++;
-  if (Object.values(state.categoriesOn).some(v=>v)) filled++;
-  if (state.avoid.length) filled++;
-  return Math.round(filled/total*100);
-}
-
-let dashCatState = 'active';
-function switchCatTab(tab) {
-  dashCatState = tab.getAttribute('data-pstate');
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('on', t === tab));
-  renderDashboard();
-}
-
-function renderDashboard() {
-  document.getElementById('db-greeting').textContent = state.name ? `Welcome back, ${state.name}` : 'Welcome!';
-  const pct = computeCompleteness();
-  document.getElementById('db-completeness-bar').style.width = pct + '%';
-  document.getElementById('db-completeness-text').textContent = pct + '% complete';
-  let rows = '';
-  Object.keys(catLabels).forEach(cat => {
-    const isOn = !!state.categoriesOn[cat];
-    if (dashCatState === 'active' && !isOn) return;
-    if (dashCatState === 'closed' && isOn) return;
-    let summary = '';
-    if (cat === 'goals') summary = state.goals.map(g=>g.name).join(', ') || 'No items yet';
-    else if (cat === 'surprise') summary = 'Level: ' + ({guided:'Guided',decide:'You Decide',trust:'Full Trust'}[state.surpriseLevel]);
-    else summary = (state[listKeysMap[cat]]||[]).join(', ') || 'No items yet';
-    rows += `<div class="pc-row"><span>${catLabels[cat]}</span><span class="pc-sum">${isOn ? summary : 'Not shown on profile'}</span></div>`;
-  });
-  document.getElementById('db-active-list').innerHTML = rows || `<div class="empty-note">No ${dashCatState} categories.</div>`;
-  document.getElementById('db-occ-title').textContent = state.name ? `${state.name}'s ${state.occtype || 'Occasion'}` : 'No occasion set up yet';
-  document.getElementById('db-occ-sub').textContent = state.occmsg ? state.occmsg.slice(0,80) + (state.occmsg.length>80?'...':'') : 'Add a message in My Profile';
-}
-
-function renderOccasion() {
-  document.getElementById('occ-title').textContent = state.name ? `${state.name}'s ${state.occtype || 'Occasion'}` : 'Your Occasion Page';
-  document.getElementById('occ-sub').textContent = state.occtype ? `${state.occtype} · Occasion Page` : 'Fill in My Profile to build this page';
-  document.getElementById('occ-message-box').textContent = state.occmsg || 'Add a personal message in My Profile to show it here.';
-  const catInfo = {
-    goals: {icon:'🎯', title:'Help Me Reach a Goal', desc: () => state.goals.length ? `Contribute toward ${state.goals[0].name}` : 'Add a goal in My Profile'},
-    choice: {icon:'💰', title:'Give Me Choice', desc: () => state.choice.join(', ') || 'Add choice options'},
-    experiences: {icon:'🌎', title:'Give Me an Experience', desc: () => state.experiences.join(', ') || 'Add experiences'},
-    causes: {icon:'❤️', title:'Support a Cause', desc: () => state.causes.join(', ') || 'Add causes'},
-    timehelp: {icon:'🕰️', title:'Give Time / Help', desc: () => state.timehelp.join(', ') || 'Add time/help ideas'},
-    surprise: {icon:'🎲', title:'Surprise Me', desc: () => 'I trust you to choose'},
-    keepsake: {icon:'💝', title:'Give a Keepsake', desc: () => state.keepsake.join(', ') || 'Add keepsake ideas'}
-  };
-  let opts = '';
-  Object.keys(catInfo).forEach(cat => {
-    if (!state.categoriesOn[cat]) return;
-    const c = catInfo[cat];
-    opts += `<div class="occ-opt"><h4>${c.icon} ${c.title}</h4><p>${c.desc()}</p></div>`;
-  });
-  document.getElementById('occ-opts-list').innerHTML = opts || '<div class="empty-note">Turn on categories in My Profile to see them here.</div>';
-  document.getElementById('occ-avoid-list').innerHTML = state.avoid.map(a => `<span class="avoid-tag">${a}</span>`).join('');
-}
-
-function renderGiving() {
-  const levelLabel = {guided:'Guided',decide:'You Decide',trust:'Full Trust'};
-  const levelDesc = {guided:"Choose from the things I've mentioned.", decide:"Pick something that fits my interests, even if it's not on my list.", trust:"I trust you completely — you still won't see anything from my avoid list."};
-  let html = '';
-  if (state.categoriesOn.goals) {
-    html += `<div class="section"><h3>🎯 Help a goal</h3>` + (state.goals.map(g => `
-      <div class="goal-row"><div class="top"><strong>${g.name}</strong><span>$${g.raised} of $${g.target}</span></div>
-      <div class="gbar"><div class="gbar-fill" style="width:${g.target>0?Math.min(100,g.raised/g.target*100):0}%"></div></div></div>`).join('') || '<div class="empty-note">No goals added</div>') + `</div>`;
+  function showTab(id, anchor) {
+    document.querySelectorAll('.tabview').forEach(function(v){ v.style.display = (v.id === 'tab-' + id) ? 'block' : 'none'; });
+    var barId = (id === 'contribute') ? 'giving' : id;
+    document.querySelectorAll('.gw-tab').forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab') === barId); });
+    if (anchor && document.getElementById(anchor)) { document.getElementById(anchor).scrollIntoView(); }
+    else { window.scrollTo(0, 0); }
   }
-  if (state.categoriesOn.experiences) html += `<div class="section"><h3>🌎 Give an experience</h3>` + (state.experiences.map(e=>`<div class="item-row">${e}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
-  if (state.categoriesOn.causes) html += `<div class="section"><h3>❤️ Support a cause</h3>` + (state.causes.map(c=>`<div class="item-row">${c}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
-  if (state.categoriesOn.choice) html += `<div class="section"><h3>💰 Give me choice</h3>` + (state.choice.map(c=>`<div class="item-row">${c}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
-  if (state.categoriesOn.timehelp) html += `<div class="section"><h3>🕰️ Time / Help</h3>` + (state.timehelp.map(t=>`<div class="item-row">${t}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
-  if (state.categoriesOn.keepsake) html += `<div class="section"><h3>💝 Keepsake</h3>` + (state.keepsake.map(k=>`<div class="item-row">${k}</div>`).join('') || '<div class="empty-note">None added</div>') + `</div>`;
-  if (state.categoriesOn.surprise) html += `<div class="section"><h3>🎲 Surprise me</h3><div style="font-size:0.84rem;color:var(--coral-deep);font-weight:600;margin-bottom:8px;">Level: ${levelLabel[state.surpriseLevel]}</div><p style="font-size:0.88rem;color:var(--ink-soft);margin-bottom:10px;">${levelDesc[state.surpriseLevel]}</p><div class="chip-row">${(state.surpriseHints||[]).map(h=>`<span class="chip on">${h}</span>`).join('')}</div></div>`;
-  document.getElementById('giving-sections').innerHTML = html || '<div class="empty-note">Turn on categories in My Profile to see them here.</div>';
-}
-
-function renderSettings() {
-  let html = '';
-  Object.keys(catLabels).forEach(cat => {
-    const isOn = !!state.categoriesOn[cat];
-    html += `<div class="set-row"><span class="set-label">${catLabels[cat]}</span><span class="set-badge ${isOn?'pub':'priv'}">${isOn?'Public':'Private'}</span></div>`;
-  });
-  document.getElementById('settings-rows').innerHTML = html + `<div style="font-size:0.8rem;color:var(--ink-soft);margin-top:14px;">Toggle categories on My Profile to change visibility here.</div>`;
-}
-
-function renderAll() { renderLists(); renderDashboard(); renderOccasion(); renderGiving(); renderSettings(); }
-
-function goTo(viewName) {
-  const tab = document.querySelector('.tab[data-view="' + viewName + '"]');
-  if (tab) switchView(tab);
-}
-
-function switchView(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === tab));
-  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'view-' + tab.getAttribute('data-view')));
-  renderAll();
-}
-
-function exportProfile() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = (state.name || 'my') + '-giftwise-profile.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importProfile(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      state = JSON.parse(e.target.result);
-      if (!state.surpriseHints) state.surpriseHints = [];
-      try { localStorage.setItem('giftwise_profile', JSON.stringify(state)); } catch(err) {}
-      hydrateForm(); renderAll();
-    } catch(err) { alert('Could not read that file.'); }
-  };
-  reader.readAsText(file);
-}
-
-load();
+  showTab('home');
 </script>
 </body>
 </html>
